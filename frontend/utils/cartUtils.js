@@ -20,7 +20,6 @@ const correctingPrice = (arrayDishes, arrayElements) => {
   
   if (Array.isArray(arrayElements) && arrayElements.length) {
     //check if price is differ
-    console.log(arrayDishes, arrayElements)
     arrayDishes.forEach(function(entry) {
       if (arrayElements.find(v => v.id === entry.id)) {
         arrayElements.find(v => v.id === entry.id).price = entry.price;

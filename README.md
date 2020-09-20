@@ -7,3 +7,29 @@
 4. Env settings example
 5. Cookie cart syncronize with backend (if price change)
 
+## FOR DEVELOP
+1. copy to .env all from .env.development and fill the SECRETS (has AUTHENTICATION_DATABASE)
+2. yarn
+3. yarn develop
+
+## FOR PRODUCTION 
+1. copy to .env all from .env.production and fill the SECRETS (hasn't AUTHENTICATION_DATABASE)
+2. yarn
+3. yarn build
+4. yarn start
+
+## FIRST CHECK DB CONNECTION
+mongo "mongodb+srv://<mycluster>.mongodb.net/<mydb>" --username <myuser>
+
+## DO THIS ROLES & PERMISSIONS IN STRAPI ADMIN
+1. Public
+  - Dish => findone
+  - Restaurant => find, findone
+  - Cart => create, findone (Advanced settings Allow to perform this action for: isauthenticated), update (Advanced settings Allow to perform this action for: isauthenticated)
+  - User-Permissions:
+    - User=>me
+2. Authenticated 
+  - Restaurant => find, findone
+  - Cart => create, findone, update
+  - User-Permissions:
+    - User=>me, update

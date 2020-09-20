@@ -10,9 +10,10 @@ module.exports = ({ env }) => ({
         database: env('DATABASE_NAME', 'strapistable'),
         username: env('DATABASE_USERNAME', 'strapi'),
         password: env('DATABASE_PASSWORD', 'strapipass'),
+        // uri: `mongodb+srv://${env('DATABASE_USERNAME')}:${env('DATABASE_PASSWORD')}@${env('DATABASE_HOST')}/${env('DATABASE_NAME')}?retryWrites=true&w=majority`,
       },
       options: {
-        authenticationDatabase: env('AUTHENTICATION_DATABASE', 'strapistable'),
+        authenticationDatabase: env('AUTHENTICATION_DATABASE', ''),
         ssl: env.bool('DATABASE_SSL', false),
       },
     },
