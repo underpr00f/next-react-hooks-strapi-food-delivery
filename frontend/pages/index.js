@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 import { Col, Input, InputGroup, InputGroupAddon, Row } from "reactstrap";
 import RestaurantList from "../components/RestaurantList";
+import { API_URL } from '../utils/constants'
 
 function Home(props) {
   const [query, updateQuery] = useState("");
@@ -38,7 +39,7 @@ function Home(props) {
 export default Home;
 
 Home.getInitialProps = async (context) => {
-  const res = await fetch(`http://localhost:1337/restaurants/`)    
+  const res = await fetch(`${API_URL}/restaurants/`)    
   const data = await res.json()
   const shows = data.map((entry) => entry)
   return { shows }
