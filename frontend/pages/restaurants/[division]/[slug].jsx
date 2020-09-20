@@ -1,11 +1,10 @@
-import React from 'react'
-
 /* /pages/restaurants.js */
+import React from 'react'
 import { useContext } from "react";
-import { useRouter } from "next/router";
-import CartPage from "../../components/cart/CartPage";
-import AppContext from "../../context/AppContext";
-import {errorChecker} from "../../utils/errorChecker";
+import CartPage from "../../../components/cart/CartPage";
+import AppContext from "../../../context/AppContext";
+import {errorSlugChecker} from "../../../utils/errorChecker";
+import { API_URL } from '../../../utils/constants'
 
 import {
   Button,
@@ -20,7 +19,7 @@ import {
 
 export default function Restaurants (props) {
     const appContext = useContext(AppContext);
-    if (props.error&&props.error.errorCode) return "Error Loading Dishes";
+    if (props.error&&props.error.errorCode) return props.error.errorMessage||"Error Loading Dishes";
     if (props.data) {
       return (
         <>
@@ -86,16 +85,13 @@ export default function Restaurants (props) {
     }
     return <h1>Add Dishes</h1>;
 }
-// Restaurants.getInitialProps = async (context) => {
-//     const response = await fetch(`http://localhost:1337/restaurants/${context.query.id}`)    
-//     const data = await errorChecker(response)
-//     return data
-//   }
 
 export async function getServerSideProps(context) {
-  const response = await fetch(`http://localhost:1337/restaurants/${context.query.id}`)    
-  const data = await errorChecker(response)
-  console.log(data.data, data.error)
+  const { slug, division } = context.query
+
+  const res = await fetch(`${API_URL}/restaurants?slug=${slug}`)  
+  const data = await errorSlugChecker(res, division)
+
   return {
     props: data
   }

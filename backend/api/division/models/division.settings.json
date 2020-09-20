@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "divisions",
+  "info": {
+    "name": "division"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    }
+  }
+}

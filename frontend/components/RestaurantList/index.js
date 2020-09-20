@@ -60,8 +60,8 @@ function RestaurantList(props) {
                 </CardBody>
                 <div className="card-footer">
                   <Link
-                    as={`/restaurants/${res.id}`}
-                    href={`/restaurants/[id]`}
+                    as={`/restaurants/${res.division.slug}/${res.slug}`}
+                    href={`/restaurants/[division]/[slug]`}
                   >
                     <a className="btn btn-primary">View</a>
                   </Link>
