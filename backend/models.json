@@ -1,0 +1,34 @@
+{
+  "Dish": {
+    "collection": "dishes",
+    "files": {
+      "image": "single"
+    }
+  },
+  "Order": {
+    "collection": "orders",
+    "files": {}
+  },
+  "Restaurant": {
+    "collection": "restaurants",
+    "files": {
+      "image": "multiple"
+    }
+  },
+  "UsersPermissionsPermission": {
+    "collection": "users-permissions_permission",
+    "files": {}
+  },
+  "UsersPermissionsRole": {
+    "collection": "users-permissions_role",
+    "files": {}
+  },
+  "UsersPermissionsUser": {
+    "collection": "users-permissions_user",
+    "files": {}
+  },
+  "UploadFile": {
+    "collection": "upload_file",
+    "files": {}
+  }
+}

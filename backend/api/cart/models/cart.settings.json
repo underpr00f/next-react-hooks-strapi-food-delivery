@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "carts",
+  "info": {
+    "name": "Cart"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "dishes": {
+      "collection": "dish",
+      "via": "carts",
+      "dominant": true
+    },
+    "elements": {
+      "type": "json"
+    }
+  }
+}
