@@ -19,7 +19,7 @@
 4. yarn start
 
 ## FIRST CHECK DB CONNECTION
-mongo "mongodb+srv://<mycluster>.mongodb.net/<mydb>" --username <myuser>
+mongo "mongodb+srv://MYCLUSTER.mongodb.net/MYDB" --username MYUSER
 
 ## DO THIS ROLES & PERMISSIONS IN STRAPI ADMIN
 1. Public
