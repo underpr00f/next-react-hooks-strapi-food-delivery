@@ -97,7 +97,6 @@ export default function Restaurants (props) {
 
 export async function getServerSideProps(context) {
   const { slug, division } = context.query
-
   const res = await fetch(`${API_URL}/restaurants?slug=${slug}`)  
   const data = await errorSlugChecker(res, division)
 

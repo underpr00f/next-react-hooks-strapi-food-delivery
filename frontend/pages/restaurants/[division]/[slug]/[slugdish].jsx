@@ -1,8 +1,12 @@
 import React from 'react'
 import { useContext } from "react";
+import Link from "next/link";
+import { useRouter } from 'next/router'
+
 import AppContext from "../../../../context/AppContext";
 import {errorSlugRestChecker} from "../../../../utils/errorChecker";
 import { API_URL } from '../../../../utils/constants'
+
 
 import {
   Button,
@@ -17,12 +21,17 @@ import {
 
 export default function Dishes (props) {
   const appContext = useContext(AppContext);
+  const router = useRouter()
+  const url = router.asPath;
+  let toRestLink = ""
+  
+  toRestLink = url.substring(0, url.lastIndexOf('/'));
 
   if (props.error&&props.error.errorCode) return props.error.errorMessage||"Error Loading Dishes";
   if (props.data) {
     return (
       <>
-        <h1>{props.data.name} from {props.data.restaurant.name}</h1>
+        <h1>{props.data.name} from <Link href={toRestLink}><a>{props.data.restaurant.name}</a></Link></h1>
         <Row>
           <Col xs="12" sm="6" style={{ margin: "10px 0" }}>
             <img 
@@ -98,6 +107,7 @@ export default function Dishes (props) {
 
 export async function getServerSideProps(context) {
   const { slug, slugdish } = context.query
+  const { url } = context.req
 
   const res = await fetch(`${API_URL}/dishes?slug=${slugdish}`)  
   const data = await errorSlugRestChecker(res, slug)
