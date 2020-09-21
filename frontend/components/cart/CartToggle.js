@@ -34,9 +34,13 @@ function CartToggle({user}) {
       className="settings"
       ref={hoverRef}
     >
-      <h5>{user}
-        {isHovered ? '😁' : '☹️'}
-      </h5>
+      <Link href="/cart">
+        <a>
+          <h5>{user}
+            {isHovered ? '😁' : '☹️'}
+          </h5>
+        </a>
+      </Link>
       <div 
         className="settings-inner"
         // className={!isHovered ? "settings-inner": "settings-inner active"} 
@@ -174,6 +178,9 @@ function CartToggle({user}) {
         #item-name {
           font-size: 1.3em;
           color: rgba(97, 97, 97, 1);
+        }
+        .card-title {
+          color:#000;
         }
       `}</style>
     </div>

@@ -19,7 +19,7 @@ class MyApp extends App {
   };
   
   componentDidUpdate(prevProps, prevState) {
-    //logout state clear
+    //logout state clear.
     if (prevState.user !== this.state.user&&this.state.user===null) {
       this.setState({
         cart: { 

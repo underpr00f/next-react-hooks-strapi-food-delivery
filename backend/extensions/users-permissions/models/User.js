@@ -3,6 +3,7 @@ const axios = require('axios')
 
 const API_URL = require('../../../utils/Constants').API_URL
 const getUrl=API_URL()
+
 /**
  * Lifecycle callbacks for the `User` model.
  */
@@ -36,6 +37,7 @@ module.exports = {
     // Fired before an `insert` query.
     beforeCreate: async (data) => {
       console.log("beforeCreate");
+      console.log(getUrl);
       const cart = await axios.post(`${getUrl}/carts`);
       // model.set("cart_id", cart.data.id)
       data.cart_id = cart.data.id
