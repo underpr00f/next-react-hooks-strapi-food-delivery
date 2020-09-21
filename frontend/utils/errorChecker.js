@@ -29,3 +29,26 @@ export async function errorSlugChecker(res, division) {
       error: {errorCode, errorMessage}, 
     }
 };
+
+export async function errorSlugRestChecker(res, slug) {
+  let errorCode = res.ok ? false : res.status
+  let errorMessage = res.ok ? false : res.statusText
+  let data = {}
+  const response = await res.json()
+
+  //CHECK SLUG WITHOUT DIVISION :(
+  if (Array.isArray(response) && 
+    response.length && 
+    slug && 
+    slug===response[0].restaurant.slug) {
+      data = response[0]
+  } else {
+    errorCode = 404;
+    errorMessage = "No such restaurant"
+  }
+  
+  return {
+      data,
+      error: {errorCode, errorMessage}, 
+    }
+};

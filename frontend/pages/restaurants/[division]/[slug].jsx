@@ -1,7 +1,7 @@
 /* /pages/restaurants.js */
 import React from 'react'
+import Link from "next/link";
 import { useContext } from "react";
-import CartPage from "../../../components/cart/CartPage";
 import AppContext from "../../../context/AppContext";
 import {errorSlugChecker} from "../../../utils/errorChecker";
 import { API_URL } from '../../../utils/constants'
@@ -38,8 +38,15 @@ export default function Restaurants (props) {
                     }
                   />
                   <CardBody>
-                    <CardTitle>{res.name} - ${res.price}</CardTitle>
-                  <CardText>{res.description}</CardText>
+                    <CardTitle>
+                      <Link
+                        as={`/restaurants/${props.data.division.slug}/${props.data.slug}/${res.slug}`}
+                        href={`/restaurants/[division]/[slug]/[slugdish]`}
+                      >
+                        <a>{res.name}</a>
+                      </Link>
+                    </CardTitle>
+                  <CardText>${res.price}</CardText>
                   </CardBody>
                   <div className="card-footer">
                     <Button
@@ -68,17 +75,19 @@ export default function Restaurants (props) {
                         a:hover {
                           color: white !important;
                         }
+                        .card-text {
+                          display: -webkit-box;
+                          -webkit-line-clamp: 3;
+                          -webkit-box-orient: vertical;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                        }
                       `}
                     </style>
                   </div>
                 </Card>
               </Col>
             ))}
-            <Col xs="3" style={{ padding: 0 }}>
-              <div>
-                <CartPage />
-              </div>
-            </Col>
           </Row>
         </>
       );

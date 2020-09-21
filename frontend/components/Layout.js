@@ -7,10 +7,9 @@ import { Container, Nav, NavItem } from "reactstrap";
 import { logout } from "../lib/auth";
 import AppContext from "../context/AppContext";
 import CartToggle from "./cart/CartToggle";
-import { useHover } from "../hooks/hooks";
+import CartPublicToggle from "./cart/CartPublicToggle";
 
 const Layout = (props) => {
-  const [hoverRef, isHovered] = useHover();
 
   const title = "Welcome to Nextjs";
   const { user, setUser } = useContext(AppContext);
@@ -52,12 +51,10 @@ const Layout = (props) => {
             {user ? (
               <CartToggle user={user.username}/>
             ) : (
-              <Link href="/register">
-                <a className="nav-link"> Sign up</a>
-              </Link>
+              <CartPublicToggle user={null}/>
             )}
           </NavItem>
-          <NavItem>
+          <NavItem className="d-flex">
             {user ? (
               <Link href="/">
                 <a
@@ -71,9 +68,14 @@ const Layout = (props) => {
                 </a>
               </Link>
             ) : (
+              <>
+              <Link href="/register">
+                <a className="nav-link"> Sign up</a>
+              </Link>
               <Link href="/login">
                 <a className="nav-link">Sign in</a>
               </Link>
+              </>
             )}
           </NavItem>
         </Nav>

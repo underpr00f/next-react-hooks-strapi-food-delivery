@@ -9,7 +9,7 @@ import AppContext from "../../context/AppContext";
 import { useHover } from "../../hooks/hooks";
 import { checkIsArray } from "../../utils/helperFunctions";
 
-function CartToggle({user}) {
+function CartPublicToggle({user}) {
   const appContext = useContext(AppContext);
   const router = useRouter();
   const [hoverRef, isHovered] = useHover();
@@ -24,7 +24,7 @@ function CartToggle({user}) {
     >
       <Link href="/cart">
         <a>
-          <h5>{user}
+          <h5>
             {isHovered ? '😁' : '☹️'}
           </h5>
         </a>
@@ -184,4 +184,4 @@ function CartToggle({user}) {
     </>
   );
 }
-export default CartToggle;
+export default CartPublicToggle;

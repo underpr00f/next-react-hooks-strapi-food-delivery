@@ -30,12 +30,16 @@
       "type": "decimal"
     },
     "restaurant": {
-      "via": "dishes",
-      "model": "restaurant"
+      "model": "restaurant",
+      "via": "dishes"
     },
     "carts": {
-      "via": "dishes",
-      "collection": "cart"
+      "collection": "cart",
+      "via": "dishes"
+    },
+    "slug": {
+      "type": "string",
+      "unique": true
     }
   }
 }

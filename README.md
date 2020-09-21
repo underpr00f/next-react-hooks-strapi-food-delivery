@@ -23,12 +23,13 @@ mongo "mongodb+srv://MYCLUSTER.mongodb.net/MYDB" --username MYUSER
 
 ## DO THIS ROLES & PERMISSIONS IN STRAPI ADMIN
 1. Public
-  - Dish => findone
+  - Dish => find,findone
   - Restaurant => find, findone
   - Cart => create, findone (Advanced settings Allow to perform this action for: isauthenticated), update (Advanced settings Allow to perform this action for: isauthenticated)
   - User-Permissions:
     - User=>me
 2. Authenticated 
+  - Dish => find,findone
   - Restaurant => find, findone
   - Cart => create, findone, update
   - User-Permissions:

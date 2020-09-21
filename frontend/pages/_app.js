@@ -11,6 +11,11 @@ import Loader from '../components/Loader'
 import { manageCart, manageCookieCart, setCartUtil, checkItemAndTotalCart } from '../utils/cartUtils'
 import { userFetch } from '../utils/userUtils'
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+import { toast } from 'react-toastify';
+import { ToastMessage } from "../components/general/ToastMessage";
+
 class MyApp extends App {
   state = {
     user: null,
@@ -90,6 +95,8 @@ class MyApp extends App {
     //if not in cart, add item if item is found increase quanity ++
     const newItem = items.find((i) => i.id === addObjectItem.id);
     let newCart = null
+    toast.info(ToastMessage(objectItem.name, "add"))
+    
     // if item is not new, add to cart, set quantity to 1
     if (!newItem) {
       //set quantity property to 1
@@ -153,6 +160,7 @@ class MyApp extends App {
       name: item.name,
       price: item.price,
     }
+    toast.info(ToastMessage(item.name, "remove"))
     //check for item already in cart
     //if not in cart, add item if item is found increase quanity ++
     const newItem = items.find((i) => i.id === item.id);
@@ -234,6 +242,12 @@ class MyApp extends App {
 
         <Layout>
           <Component {...pageProps} isLoading={isLoading}/>
+          <ToastContainer 
+            hideProgressBar={false} 
+            position="top-right"
+            autoClose={2000}
+            removeCloseButton={true}
+          />
         </Layout>
       </AppContext.Provider>
       {isLoading && <Loader />}

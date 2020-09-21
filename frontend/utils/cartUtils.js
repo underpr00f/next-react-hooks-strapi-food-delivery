@@ -1,6 +1,7 @@
 import Cookie from "js-cookie";
 import axios from "axios";
 import { API_URL } from './constants'
+
 // function arraysEqual(a1,a2) {
   /* WARNING: arrays must not contain {objects} or behavior may be undefined */
   // Object.keys(item).forEach(function(key) {
@@ -16,6 +17,7 @@ import { API_URL } from './constants'
 //       return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 //   });
 // }
+
 const correctingPrice = (arrayDishes, arrayElements) => {
   
   if (Array.isArray(arrayElements) && arrayElements.length) {
@@ -23,6 +25,7 @@ const correctingPrice = (arrayDishes, arrayElements) => {
     arrayDishes.forEach(function(entry) {
       if (arrayElements.find(v => v.id === entry.id)) {
         arrayElements.find(v => v.id === entry.id).price = entry.price;
+        arrayElements.find(v => v.id === entry.id).name = entry.name;
       }
     });
     
@@ -98,7 +101,8 @@ export const manageCookieCart = (cart_id, cart_items) => {
       const { data } = res;
       const dish = {
         id: data.id,
-        price: data.price
+        price: data.price,
+        name: data.name
       }
       let dishes = [];
       dishes.push(dish);

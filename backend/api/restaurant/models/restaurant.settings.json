@@ -27,8 +27,8 @@
       "required": false
     },
     "dishes": {
-      "collection": "dish",
-      "via": "restaurant"
+      "via": "restaurant",
+      "collection": "dish"
     },
     "slug": {
       "type": "string",
