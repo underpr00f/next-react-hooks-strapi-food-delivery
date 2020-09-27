@@ -1,7 +1,7 @@
 {
     "git.ignoreLimitWarning": true,
     "http.proxySupport": "off",
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
     },

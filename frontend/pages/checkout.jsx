@@ -2,7 +2,7 @@
 
 import React, { useContext } from "react";
 
-import { Row, Col } from "reactstrap";
+import Grid from "@material-ui/core/Grid";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import InjectedCheckoutForm from "../components/checkout/CheckoutForm";
@@ -20,17 +20,17 @@ function Checkout() {
   const stripePromise = loadStripe("YOUR STRIPE PUBLIC KEY pk_");
 
   return (
-    <Row>
-      <Col style={{ paddingRight: 0 }} sm={{ size: 3, order: 1, offset: 2 }}>
+    <Grid container spacing={2}>
+      <Grid item xs={6}>
         <h1 style={{ margin: 20 }}>Checkout</h1>
         <Cart isAuthenticated={isAuthenticated} />
-      </Col>
-      <Col style={{ paddingLeft: 5 }} sm={{ size: 6, order: 2 }}>
+      </Grid>
+      <Grid item xs={6}>
         <Elements stripe={stripePromise}>
           <InjectedCheckoutForm />
         </Elements>
-      </Col>
-    </Row>
+      </Grid>
+    </Grid>
   );
   // }
 }
