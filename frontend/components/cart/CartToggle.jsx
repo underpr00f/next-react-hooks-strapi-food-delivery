@@ -23,10 +23,16 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    boxShadow: "none"
   },
   typography: {
     margin: 0
+  },
+  iconButton: {
+    "& svg": {
+      fontSize: "1rem"
+    }
   }
 }));
 function CartToggle({ user }) {
@@ -72,14 +78,18 @@ function CartToggle({ user }) {
                         key={item.id}
                       >
                         <div>
-                          <span id="item-price">&nbsp; ${item.price}</span>
+                          <span id="item-price">${item.price}</span>
                           <span id="item-name">&nbsp; {item.name}</span>
                         </div>
                         <div>
-                          <IconButton onClick={() => appContext.addItem(item)}>
+                          <IconButton
+                            className={classes.iconButton}
+                            onClick={() => appContext.addItem(item)}
+                          >
                             <AddIcon />
                           </IconButton>
                           <IconButton
+                            className={classes.iconButton}
                             onClick={() => appContext.removeItem(item)}
                           >
                             <RemoveIcon />
@@ -97,48 +107,23 @@ function CartToggle({ user }) {
                   Your cart is empty
                 </div>
               )}
-              {isAuthenticated ? (
-                cart.items && cart.items.length > 0 ? (
+              {cart.items && cart.items.length > 0 && (
+                <div>
+                  <Badge style={{ width: 200, padding: 10 }} color="light">
+                    <h5
+                      style={{ fontWeight: 100, color: "gray" }}
+                      className={classes.typography}
+                    >
+                      Total:
+                    </h5>
+                    <h3 className={classes.typography}>
+                      ${appContext.cart.total.toFixed(2)}
+                    </h3>
+                  </Badge>
                   <div>
-                    <Badge style={{ width: 200, padding: 10 }} color="light">
-                      <h5
-                        style={{ fontWeight: 100, color: "gray" }}
-                        className={classes.typography}
-                      >
-                        Total:
-                      </h5>
-                      <h3 className={classes.typography}>
-                        ${appContext.cart.total.toFixed(2)}
-                      </h3>
-                    </Badge>
-                    <div>
-                      <CardActions>
-                        <ButtonLink name="Order" hrefValue={`/checkout`} />
-                      </CardActions>
-                    </div>
+                    <ButtonLink name="Cart" hrefValue={`/cart`} />
                   </div>
-                ) : (
-                  <>
-                    {router.pathname === "/checkout" && (
-                      <small
-                        style={{ color: "blue" }}
-                        onClick={() => window.history.back()}
-                      >
-                        back to restaurant
-                      </small>
-                    )}
-                  </>
-                )
-              ) : (
-                <>
-                  <h3>
-                    $
-                    {appContext.cart.total
-                      ? appContext.cart.total.toFixed(2)
-                      : 0}
-                  </h3>
-                  <h5>Login to Order</h5>
-                </>
+                </div>
               )}
             </CardContent>
           </Card>

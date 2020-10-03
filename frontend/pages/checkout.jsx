@@ -21,11 +21,11 @@ function Checkout() {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={6}>
+      <Grid item xs={12} md={6}>
         <h1 style={{ margin: 20 }}>Checkout</h1>
         <Cart isAuthenticated={isAuthenticated} />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} md={6}>
         <Elements stripe={stripePromise}>
           <InjectedCheckoutForm />
         </Elements>

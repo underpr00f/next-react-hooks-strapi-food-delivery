@@ -1,23 +1,45 @@
 /* components/cart/index.js */
 
 import React, { useContext } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { Button, Card, CardBody, CardTitle, Badge } from "reactstrap";
+import { ButtonLink } from "../../MUI/Molecules/ButtonLink";
+import { LoaderContent } from "../Loaders/LoaderContent";
 
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import { makeStyles } from "@material-ui/core/styles";
+import CardContent from "@material-ui/core/CardContent";
 import AppContext from "../../context/AppContext";
+import Typography from "@material-ui/core/Typography";
+
+const useStyles = makeStyles({
+  cardTitle: {
+    color: "#000"
+  }
+});
 
 function CartPage() {
   const appContext = useContext(AppContext);
   const router = useRouter();
-
-  const { cart, isAuthenticated } = appContext;
+  const classes = useStyles();
+  const { cart, isAuthenticated, cartLoaded } = appContext;
+  if (!cartLoaded) {
+    return <LoaderContent />;
+  }
   return (
-    <div>
+    <Grid item xs={12}>
       <Card style={{ padding: "10px 5px" }} className="cart">
-        <CardTitle style={{ margin: 10 }}>Your Order:</CardTitle>
+        <Typography
+          gutterBottom
+          variant="h5"
+          component="h3"
+          className={classes.cardTitle}
+        >
+          Your Order:
+        </Typography>
         <hr />
-        <CardBody style={{ padding: 10 }}>
+        <CardContent style={{ padding: 10 }}>
           <div style={{ marginBottom: 6 }}>
             <small>Items:</small>
           </div>
@@ -38,26 +60,24 @@ function CartPage() {
                         <div>
                           <Button
                             style={{
-                              height: 25,
-                              padding: 0,
-                              width: 15,
                               marginRight: 5,
-                              marginLeft: 10,
+                              marginLeft: 10
                             }}
+                            size="small"
+                            variant="contained"
+                            color="primary"
                             onClick={() => appContext.addItem(item)}
-                            color="link"
                           >
                             +
                           </Button>
                           <Button
                             style={{
-                              height: 25,
-                              padding: 0,
-                              width: 15,
-                              marginRight: 10,
+                              marginRight: 10
                             }}
+                            size="small"
+                            variant="contained"
+                            color="primary"
                             onClick={() => appContext.removeItem(item)}
-                            color="link"
                           >
                             -
                           </Button>
@@ -71,24 +91,32 @@ function CartPage() {
                 })
               : null}
             {isAuthenticated ? (
-              cart.items&&cart.items.length > 0 ? (
+              cart.items && cart.items.length > 0 ? (
                 <div>
-                  <Badge style={{ width: 200, padding: 10 }} color="light">
-                    <h5 style={{ fontWeight: 100, color: "gray" }}>Total:</h5>
-                    <h3>${appContext.cart.total.toFixed(2)}</h3>
-                  </Badge>
-                    <div
-                      style={{
-                        marginTop: 10,
-                        marginRight: 10,
-                      }}
-                    >
-                      <Link href="/checkout">
-                        <Button style={{ width: "100%" }} color="primary">
-                          <a>Order</a>
-                        </Button>
-                      </Link>
-                    </div>
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="h3"
+                    className={classes.cardTitle}
+                  >
+                    Total:
+                  </Typography>
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="h3"
+                    className={classes.cardTitle}
+                  >
+                    ${appContext.cart.total.toFixed(2)}
+                  </Typography>
+                  <div
+                    style={{
+                      marginTop: 10,
+                      marginRight: 10
+                    }}
+                  >
+                    <ButtonLink name="Order" hrefValue={`/checkout`} />
+                  </div>
                 </div>
               ) : (
                 <>
@@ -104,12 +132,15 @@ function CartPage() {
               )
             ) : (
               <>
-                <h3>${appContext.cart.total?appContext.cart.total.toFixed(2):0}</h3>
+                <h3>
+                  $
+                  {appContext.cart.total ? appContext.cart.total.toFixed(2) : 0}
+                </h3>
                 <h5>Login to Order</h5>
               </>
             )}
           </div>
-        </CardBody>
+        </CardContent>
       </Card>
       <style jsx>{`
         #item-price {
@@ -126,7 +157,7 @@ function CartPage() {
           color: rgba(97, 97, 97, 1);
         }
       `}</style>
-    </div>
+    </Grid>
   );
 }
 export default CartPage;

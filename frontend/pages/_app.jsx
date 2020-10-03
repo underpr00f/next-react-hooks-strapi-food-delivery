@@ -7,7 +7,7 @@ import Layout from "../components/Layout";
 import AppContext from "../context/AppContext";
 import withData from "../lib/apollo";
 import Router from "next/router";
-import Loader from "../components/Loader";
+import Loader from "../components/Loaders/Loader";
 
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -30,7 +30,8 @@ class MyApp extends App {
   state = {
     user: null,
     cart: { items: [], total: 0 },
-    isLoading: false
+    isLoading: false,
+    cartLoaded: false
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -68,7 +69,8 @@ class MyApp extends App {
       if (!user) {
         this.setState({
           user: null,
-          cart: { items: [], total: 0 }
+          cart: { items: [], total: 0 },
+          cartLoaded: true
         });
         return null;
       }
@@ -77,7 +79,7 @@ class MyApp extends App {
       // restore cart from cookie, without db
       const cart = checkItemAndTotalCart();
       // if items in cart, set items and total from cookie
-      this.setState({ cart });
+      this.setState({ cart, user: null, cartLoaded: true });
     }
   }
 
@@ -91,7 +93,7 @@ class MyApp extends App {
   };
   setCart = async (cart_id) => {
     const cart = await setCartUtil(cart_id);
-    this.setState({ cart });
+    this.setState({ cart, cartLoaded: true });
   };
   addItem = (objectItem) => {
     let { items } = this.state.cart;
@@ -252,6 +254,7 @@ class MyApp extends App {
             isAuthenticated: !!this.state.user,
             setUser: this.setUser,
             cart: this.state.cart,
+            cartLoaded: this.state.cartLoaded,
             addItem: this.addItem,
             removeItem: this.removeItem
           }}

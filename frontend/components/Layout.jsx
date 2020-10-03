@@ -11,6 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { NavLink } from "../MUI/Molecules/ButtonLink";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -95,7 +96,7 @@ const Layout = (props) => {
           </Toolbar>
         </AppBar>
       </header>
-      {props.children}
+      <Container>{props.children}</Container>
     </div>
   );
 };

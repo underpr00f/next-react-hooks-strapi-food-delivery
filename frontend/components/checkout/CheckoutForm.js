@@ -2,7 +2,7 @@
 
 import React, { useState, useContext } from "react";
 
-import { FormGroup, Label, Input } from "reactstrap";
+import { Label, Input } from "reactstrap";
 
 import fetch from "isomorphic-fetch";
 import Cookies from "js-cookie";
@@ -11,12 +11,15 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import CardSection from "./CardSection";
 import AppContext from "../../context/AppContext";
 
+import FormControl from "@material-ui/core/FormControl";
+import TextField from "@material-ui/core/TextField";
+
 function CheckoutForm() {
   const [data, setData] = useState({
     address: "",
     city: "",
     state: "",
-    stripe_id: "",
+    stripe_id: ""
   });
   const [error, setError] = useState("");
   const stripe = useStripe();
@@ -50,8 +53,8 @@ function CheckoutForm() {
         address: data.address,
         city: data.city,
         state: data.state,
-        token: token.token.id,
-      }),
+        token: token.token.id
+      })
     });
 
     if (!response.ok) {
@@ -77,22 +80,34 @@ function CheckoutForm() {
     <div className="paper">
       <h5>Your information:</h5>
       <hr />
-      <FormGroup style={{ display: "flex" }}>
-        <div style={{ flex: "0.90", marginRight: 10 }}>
-          <Label>Address</Label>
-          <Input name="address" onChange={onChange} />
+      <FormControl style={{ display: "flex" }}>
+        <div style={{ flex: "0.90", marginRight: 10, marginBottom: 10 }}>
+          <TextField
+            name="address"
+            label="Address"
+            variant="outlined"
+            onChange={onChange}
+          />
         </div>
-      </FormGroup>
-      <FormGroup style={{ display: "flex" }}>
-        <div style={{ flex: "0.65", marginRight: "6%" }}>
-          <Label>City</Label>
-          <Input name="city" onChange={onChange} />
+      </FormControl>
+      <FormControl style={{ display: "flex" }}>
+        <div style={{ flex: "0.65", marginRight: "6%", marginBottom: 10 }}>
+          <TextField
+            name="city"
+            label="City"
+            variant="outlined"
+            onChange={onChange}
+          />
         </div>
-        <div style={{ flex: "0.25", marginRight: 0 }}>
-          <Label>State</Label>
-          <Input name="state" onChange={onChange} />
+        <div style={{ flex: "0.25", marginRight: 0, marginBottom: 10 }}>
+          <TextField
+            name="state"
+            label="State"
+            variant="outlined"
+            onChange={onChange}
+          />
         </div>
-      </FormGroup>
+      </FormControl>
 
       <CardSection data={data} stripeError={error} submitOrder={submitOrder} />
 
