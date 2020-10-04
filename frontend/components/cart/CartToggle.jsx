@@ -2,7 +2,6 @@
 
 import React, { useContext } from "react";
 import { useRouter } from "next/router";
-import { Badge } from "reactstrap";
 import AppContext from "../../context/AppContext";
 import { useHover } from "../../hooks/hooks";
 import { checkIsArray } from "../../utils/helperFunctions";
@@ -12,7 +11,7 @@ import Card from "@material-ui/core/Card";
 
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-
+import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
@@ -109,17 +108,22 @@ function CartToggle({ user }) {
               )}
               {cart.items && cart.items.length > 0 && (
                 <div>
-                  <Badge style={{ width: 200, padding: 10 }} color="light">
-                    <h5
-                      style={{ fontWeight: 100, color: "gray" }}
-                      className={classes.typography}
-                    >
-                      Total:
-                    </h5>
-                    <h3 className={classes.typography}>
-                      ${appContext.cart.total.toFixed(2)}
-                    </h3>
-                  </Badge>
+                  <Typography
+                    gutterBottom
+                    variant="h6"
+                    component="h3"
+                    className={classes.cardTitle}
+                  >
+                    Total:
+                  </Typography>
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="h3"
+                    className={classes.cardTitle}
+                  >
+                    ${appContext.cart.total.toFixed(2)}
+                  </Typography>
                   <div>
                     <ButtonLink name="Cart" hrefValue={`/cart`} />
                   </div>

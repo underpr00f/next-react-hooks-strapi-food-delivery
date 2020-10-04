@@ -7,6 +7,7 @@ import Link from "next/link";
 import { logout } from "../lib/auth";
 import AppContext from "../context/AppContext";
 import CartToggle from "./cart/CartToggle";
+import { Footer } from "./general/Footer";
 import { makeStyles } from "@material-ui/core/styles";
 import { NavLink } from "../MUI/Molecules/ButtonLink";
 import AppBar from "@material-ui/core/AppBar";
@@ -15,7 +16,9 @@ import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    "& .Toastify__toast--info": {
+      background: theme.palette.primary.dark
+    }
   },
   menuLeft: {
     marginLeft: "auto",
@@ -46,7 +49,7 @@ const Layout = (props) => {
   const { user, setUser } = useContext(AppContext);
 
   return (
-    <div>
+    <div className={classes.root}>
       <Head>
         <title>{title}</title>
         <meta charSet="utf-8" />
@@ -97,6 +100,7 @@ const Layout = (props) => {
         </AppBar>
       </header>
       <Container>{props.children}</Container>
+      <Footer />
     </div>
   );
 };

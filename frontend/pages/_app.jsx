@@ -181,7 +181,9 @@ class MyApp extends App {
       name: item.name,
       price: item.price
     };
-    toast.info(ToastMessage(item.name, "remove"));
+    toast.info(ToastMessage(item.name, "remove"), {
+      className: "black-background"
+    });
     //check for item already in cart
     //if not in cart, add item if item is found increase quanity ++
     const newItem = items.find((i) => i.id === item.id);
@@ -267,22 +269,22 @@ class MyApp extends App {
             crossOrigin="anonymous"
           /> */}
           </Head>
-
-          <Layout>
-            <ThemeProvider theme={theme}>
-              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-              <CssBaseline />
+          <ThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Layout>
               <Component {...pageProps} isLoading={isLoading} />
-            </ThemeProvider>
-            <ToastContainer
-              hideProgressBar={false}
-              position="top-right"
-              autoClose={2000}
-              removeCloseButton={true}
-            />
-          </Layout>
+
+              <ToastContainer
+                hideProgressBar={false}
+                position="top-right"
+                autoClose={2000}
+                removeCloseButton={true}
+              />
+            </Layout>
+            {isLoading && <Loader />}
+          </ThemeProvider>
         </AppContext.Provider>
-        {isLoading && <Loader />}
       </>
     );
   }

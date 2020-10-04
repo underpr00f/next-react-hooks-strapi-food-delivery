@@ -1,21 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
-import { login } from "../lib/auth";
+import { registerUser, updateCart } from "../lib/auth";
 import AppContext from "../context/AppContext";
-import { ToastMessage } from "../components/general/ToastMessage";
 import { RenderField } from "../MUI/Atoms/RenderField";
 import { validateEmailInput } from "../utils/Validators";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -41,22 +36,31 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Login() {
+export const Register = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const router = useRouter();
+  //   const router = useRouter();
   const appContext = useContext(AppContext);
   const classes = useStyles();
 
   const { register, handleSubmit, reset, errors } = useForm();
 
+  useEffect(() => {
+    if (Object.entries(error).length !== 0 && error.constructor === Object) {
+      error.message.map((error) => {
+        console.log(error);
+        toast.error(ToastMessage(error.messages[0].message));
+      });
+    }
+  }, [error]);
+
   const onSubmit = async (e) => {
     setLoading(true);
-    login(e.identifier, e.password)
+    registerUser(e.username, e.identifier, e.password)
+      .then(updateCart)
       .then((res) => {
-        // set authed User in global context to update header/app state
+        // set authed user in global context object
         appContext.setUser(res.data.user);
-        // setLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -66,19 +70,9 @@ export default function Login() {
         setLoading(false);
       });
   };
-  useEffect(() => {
-    if (appContext.isAuthenticated) {
-      router.push("/"); // redirect if you're already logged in
-    }
-  }, []);
-
-  useEffect(() => {
-    if (Object.entries(error).length !== 0 && error.constructor === Object) {
-      error.message.map((error) => {
-        toast.error(ToastMessage(error.messages[0].message));
-      });
-    }
-  }, [error]);
+  //   function onChange(event) {
+  //     updateData({ ...data, [event.target.name]: event.target.value });
+  //   }
 
   return (
     <>
@@ -95,12 +89,22 @@ export default function Login() {
             <RenderField
               validationType={register({
                 required: true,
+                minLength: 3
+              })}
+              focusField={true}
+              shortName="Your username"
+              nameType="username"
+              focusField={true}
+              errors={errors}
+            />
+            <RenderField
+              validationType={register({
+                required: true,
                 minLength: 3,
                 validate: validateEmailInput
               })}
               shortName="Your email"
               nameType="identifier"
-              focusField={true}
               errors={errors}
             />
             <RenderField
@@ -113,34 +117,19 @@ export default function Login() {
               typeField="password"
               errors={errors}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
-              fullWidth
-              variant="contained"
+              style={{ float: "right", width: 120 }}
               color="primary"
-              className={classes.submit}
+              disabled={loading}
               type="submit"
             >
-              {loading ? "Loading... " : "Login"}
+              {loading ? "Loading... " : "Signup"}
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/register" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
           </form>
         </div>
       </Container>
     </>
   );
-}
+};
+
+export default Register;

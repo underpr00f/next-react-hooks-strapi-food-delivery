@@ -4,8 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
 const useStyles = makeStyles((theme) => ({
   btnLink: {
-    color: "#f8f8f8",
-    "&:hover": { color: "#ffffff" }
+    // color: "#f8f8f8",
+    // color: theme.palette.primary.main,
+    // "&:hover": { color: "#ffffff" }
   },
   navLink: {
     color: "#ffffff",
@@ -18,15 +19,20 @@ const useStyles = makeStyles((theme) => ({
       color: "#ffffff",
       opacity: 1
     }
+  },
+  simpleLink: {
+    // color: "#f8f8f8",
+    // color: theme.palette.primary.main,
+    // "&:hover": { color: "#ffffff" }
   }
 }));
 
-export const ButtonLink = ({ name, hrefValue, asValue }) => {
+export const ButtonLink = ({ name, hrefValue, asValue, color, variant }) => {
   const classes = useStyles();
   return (
     <Button
-      variant="contained"
-      color="primary"
+      variant={variant || "contained"}
+      color={color || "primary"}
       naked
       component={CustomLink}
       href={hrefValue}
