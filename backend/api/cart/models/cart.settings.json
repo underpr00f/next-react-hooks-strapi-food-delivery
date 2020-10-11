@@ -16,6 +16,10 @@
     },
     "elements": {
       "type": "json"
+    },
+    "order": {
+      "via": "cart",
+      "model": "order"
     }
   }
 }

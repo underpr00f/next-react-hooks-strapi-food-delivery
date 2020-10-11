@@ -44,7 +44,7 @@ function CartPage() {
             <small>Items:</small>
           </div>
           <div>
-            {cart.items
+            {cart && cart.items
               ? cart.items.map((item) => {
                   if (item.quantity > 0) {
                     return (
@@ -91,7 +91,7 @@ function CartPage() {
                 })
               : null}
             {isAuthenticated ? (
-              cart.items && cart.items.length > 0 ? (
+              cart && cart.items && cart.items.length > 0 ? (
                 <div>
                   <Typography
                     gutterBottom
@@ -115,7 +115,9 @@ function CartPage() {
                       marginRight: 10
                     }}
                   >
-                    <ButtonLink name="Order" hrefValue={`/checkout`} />
+                    {router.pathname === "/cart" && (
+                      <ButtonLink name="Order" hrefValue={`/checkout`} />
+                    )}
                   </div>
                 </div>
               ) : (

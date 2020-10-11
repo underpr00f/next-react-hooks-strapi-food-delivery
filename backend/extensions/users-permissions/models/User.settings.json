@@ -55,6 +55,13 @@
     },
     "cart_id": {
       "type": "string"
+    },
+    "order_id": {
+      "type": "string"
+    },
+    "orders": {
+      "via": "user",
+      "collection": "order"
     }
   }
 }

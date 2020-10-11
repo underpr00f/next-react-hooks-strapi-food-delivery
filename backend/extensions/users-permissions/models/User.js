@@ -1,8 +1,8 @@
-'use strict';
-const axios = require('axios')
+"use strict";
+const axios = require("axios");
 
-const API_URL = require('../../../utils/Constants').API_URL
-const getUrl=API_URL()
+const API_URL = require("../../../utils/Constants").API_URL;
+const getUrl = API_URL();
 
 /**
  * Lifecycle callbacks for the `User` model.
@@ -39,8 +39,10 @@ module.exports = {
       console.log("beforeCreate");
       console.log(getUrl);
       const cart = await axios.post(`${getUrl}/carts`);
+      // const order = await axios.post(`${getUrl}/orders`);
       // model.set("cart_id", cart.data.id)
-      data.cart_id = cart.data.id
+      data.cart_id = cart.data.id;
+      // data.order_id = order.data.id;
       // strapi.query('model').action()
     },
 
@@ -65,5 +67,5 @@ module.exports = {
     // After destroying a value.
     // Fired after a `delete` query.
     // afterDestroy: async (model, attrs, options) => {}
-  }
+  },
 };

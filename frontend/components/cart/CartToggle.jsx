@@ -62,12 +62,12 @@ function CartToggle({ user }) {
         <div className="settings-inner">
           <Card style={{ padding: "10px 5px" }} className="cart">
             <CardContent style={{ padding: 10 }}>
-              {cart.items && checkIsArray(cart.items) && (
+              {cart && cart.items && checkIsArray(cart.items) && (
                 <div style={{ marginBottom: 6 }}>
                   <small>Items:</small>
                 </div>
               )}
-              {cart.items && checkIsArray(cart.items) ? (
+              {cart && cart.items && checkIsArray(cart.items) ? (
                 cart.items.map((item) => {
                   if (item.quantity > 0) {
                     return (
@@ -106,7 +106,7 @@ function CartToggle({ user }) {
                   Your cart is empty
                 </div>
               )}
-              {cart.items && cart.items.length > 0 && (
+              {cart && cart.items && cart.items.length > 0 && (
                 <div>
                   <Typography
                     gutterBottom
@@ -170,6 +170,11 @@ function CartToggle({ user }) {
           }
           .card-title {
             color: #000;
+          }
+          @media screen and (max-width: 767px) {
+            .settings {
+              position: static;
+            }
           }
         `}</style>
       </div>

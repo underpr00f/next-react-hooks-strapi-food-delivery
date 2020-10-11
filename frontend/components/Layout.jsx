@@ -75,7 +75,7 @@ const Layout = (props) => {
               {user ? (
                 <>
                   <CartToggle user={user.username} />
-                  <NavLink name={user.username} hrefValue="/cart" />
+                  <NavLink name={user.username} hrefValue="/my-orders" />
                   <Link href="/">
                     <a
                       className="nav-link"

@@ -29,7 +29,7 @@ import { ToastMessage } from "../components/general/ToastMessage";
 class MyApp extends App {
   state = {
     user: null,
-    cart: { items: [], total: 0 },
+    cart: { items: [], total: 0, orderId: null },
     isLoading: false,
     cartLoaded: false
   };
@@ -40,7 +40,8 @@ class MyApp extends App {
       this.setState({
         cart: {
           items: [],
-          total: 0
+          total: 0,
+          orderId: null
         }
       });
     }
@@ -69,7 +70,7 @@ class MyApp extends App {
       if (!user) {
         this.setState({
           user: null,
-          cart: { items: [], total: 0 },
+          cart: { items: [], total: 0, orderId: null },
           cartLoaded: true
         });
         return null;
@@ -93,6 +94,7 @@ class MyApp extends App {
   };
   setCart = async (cart_id) => {
     const cart = await setCartUtil(cart_id);
+    console.log(cart.orderId);
     this.setState({ cart, cartLoaded: true });
   };
   addItem = (objectItem) => {
@@ -121,12 +123,17 @@ class MyApp extends App {
         {
           cart: {
             items: [...items, addObjectItem],
-            total: this.state.cart.total + addObjectItem.price
+            total: this.state.cart.total + addObjectItem.price,
+            orderId: this.state.cart.orderId
           }
         },
         async () => {
           if (user && user.cart_id) {
-            newCart = await manageCart(user.cart_id, this.state.cart.items);
+            newCart = await manageCart(
+              user.cart_id,
+              this.state.cart.items,
+              user.id
+            );
           } else {
             newCart = await manageCookieCart(
               addObjectItem.id,
@@ -150,12 +157,17 @@ class MyApp extends App {
                 ? Object.assign({}, item, { quantity: item.quantity + 1 })
                 : item
             ),
-            total: this.state.cart.total + addObjectItem.price
+            total: this.state.cart.total + addObjectItem.price,
+            orderId: this.state.cart.orderId
           }
         },
         async () => {
           if (user && user.cart_id) {
-            newCart = await manageCart(user.cart_id, this.state.cart.items);
+            newCart = await manageCart(
+              user.cart_id,
+              this.state.cart.items,
+              user.id
+            );
           } else {
             newCart = await manageCookieCart(
               addObjectItem.id,
@@ -198,12 +210,17 @@ class MyApp extends App {
                 ? Object.assign({}, item, { quantity: item.quantity - 1 })
                 : item
             ),
-            total: this.state.cart.total - item.price
+            total: this.state.cart.total - item.price,
+            orderId: this.state.cart.orderId
           }
         },
         async () => {
           if (user && user.cart_id) {
-            newCart = await manageCart(user.cart_id, this.state.cart.items);
+            newCart = await manageCart(
+              user.cart_id,
+              this.state.cart.items,
+              user.id
+            );
           } else {
             newCart = await manageCookieCart(
               removeObjectItem.id,
@@ -224,10 +241,20 @@ class MyApp extends App {
 
       items.splice(index, 1);
       this.setState(
-        { cart: { items: items, total: this.state.cart.total - item.price } },
+        {
+          cart: {
+            items: items,
+            total: this.state.cart.total - item.price,
+            orderId: this.state.cart.orderId
+          }
+        },
         async () => {
           if (user && user.cart_id) {
-            newCart = await manageCart(user.cart_id, this.state.cart.items);
+            newCart = await manageCart(
+              user.cart_id,
+              this.state.cart.items,
+              user.id
+            );
           } else {
             newCart = await manageCookieCart(
               removeObjectItem.id,
@@ -255,6 +282,7 @@ class MyApp extends App {
             user: this.state.user,
             isAuthenticated: !!this.state.user,
             setUser: this.setUser,
+            setCart: this.setCart,
             cart: this.state.cart,
             cartLoaded: this.state.cartLoaded,
             addItem: this.addItem,

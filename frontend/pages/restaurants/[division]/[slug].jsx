@@ -45,7 +45,7 @@ export default function Restaurants(props) {
         <h1>{props.data.name}</h1>
         <Grid container spacing={1}>
           {props.data.dishes.map((res) => (
-            <Grid item xs={6} sm={4} key={res.id}>
+            <Grid item xs={12} sm={6} md={4} key={res.id}>
               <Card style={{ margin: "0 10px" }}>
                 <CardMedia
                   component="img"

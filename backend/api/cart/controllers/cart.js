@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
 /**
  * Read the documentation (https://strapi.io/documentation/v3.x/concepts/controllers.html#core-controllers)
  * to customize this controller
  */
 
-const { sanitizeEntity } = require('strapi-utils');
+const { sanitizeEntity } = require("strapi-utils");
 
 // const sanitizeUser = user =>
 //   sanitizeEntity(user, {
@@ -19,34 +19,41 @@ module.exports = {
    * @return {Object}
    */
 
-  // async create(ctx) {
-  //   let entity;
-  //   console.log(ctx.request)
+  async update(ctx) {
+    const { id } = ctx.params;
+    const { user } = ctx.request.body;
+    console.log(ctx.request.body, id);
+    const entity = await strapi.services.cart.update({ id }, ctx.request.body);
+    if (id && user) {
+      const existOrder = await strapi
+        .query("order")
+        .findOne({ cart: id, user: user });
 
-    // entity = await strapi.services.cart.create(ctx.request.body);
-    // try {
-    //     entity = await strapi.services.cart.create({
-    //         user: ctx.request.body.id,
-    //         quantity: ctx.request.body.quantity
-    //     });   
-    // } catch (error) {
-    //     console.log(error)
-    //     // throw error;
-    //     return ctx.throw(500, error);
-    // }
-    // entity = await strapi.query('cart').findOne({ user: ctx.request.body.id });
-    // console.log(sanitizeEntity(entity, { model: strapi.models.cart }));
-    // if (!entity) {
-    //     console.log("preved")
-    //     ctx.send({
-    //         message: 'ok'
-    //       });
-    // }
-    // console.log(entity);
-    // return sanitizeEntity(entity, { model: strapi.models.cart });
-    // return entity;
-  // },
-    /**
+      if (!existOrder) {
+        await strapi.query("order").create({
+          city: "MW",
+          cart: id,
+          user: user,
+        });
+        // return sanitizeEntity(createOrder, { model: strapi.models.order });
+      } else {
+        console.log("existed", existOrder);
+        await strapi.services.order.update(
+          { id: existOrder._id },
+          {
+            city: "BMW",
+          }
+        );
+        // const order = await strapi.services.order.createOrUpdate({ city: "NEW" });
+        // return order;
+        //   return sanitizeEntity(order, { model: strapi.models.order });
+        // return sanitizeEntity(updateOrder, { model: strapi.models.order });
+      }
+    }
+
+    return sanitizeEntity(entity, { model: strapi.models.cart });
+  },
+  /**
    * Retrieve authenticated user.
    * @return {Object|Array}
    */
@@ -71,8 +78,6 @@ module.exports = {
  *
  * @description: A set of functions called "actions" for managing `User`.
  */
-
-
 
 // module.exports = {
 //   /**

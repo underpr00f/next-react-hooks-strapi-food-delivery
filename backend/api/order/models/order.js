@@ -1,55 +1,23 @@
-'use strict';
-
+"use strict";
 /**
  * Lifecycle callbacks for the `order` model.
  */
 
 module.exports = {
-  // Before saving a value.
-  // Fired before an `insert` or `update` query.
-  // beforeSave: async (model, attrs, options) => {},
+  lifecycles: {
+    beforeUpdate: async (params, data) => {
+      console.log("beforeUpdate");
 
-  // After saving a value.
-  // Fired after an `insert` or `update` query.
-  // afterSave: async (model, response, options) => {},
+      // console.log("data", params, data);
 
-  // Before fetching a value.
-  // Fired before a `fetch` operation.
-  // beforeFetch: async (model, columns, options) => {},
+      // const order = await strapi.query("order").findOne({ id: params });
+      // console.log([order.last_dishes, data.current_dishes]);
 
-  // After fetching a value.
-  // Fired after a `fetch` operation.
-  // afterFetch: async (model, response, options) => {},
-
-  // Before fetching all values.
-  // Fired before a `fetchAll` operation.
-  // beforeFetchAll: async (model, columns, options) => {},
-
-  // After fetching all values.
-  // Fired after a `fetchAll` operation.
-  // afterFetchAll: async (model, response, options) => {},
-
-  // Before creating a value.
-  // Fired before an `insert` query.
-  // beforeCreate: async (model, attrs, options) => {},
-
-  // After creating a value.
-  // Fired after an `insert` query.
-  // afterCreate: async (model, attrs, options) => {},
-
-  // Before updating a value.
-  // Fired before an `update` query.
-  // beforeUpdate: async (model, attrs, options) => {},
-
-  // After updating a value.
-  // Fired after an `update` query.
-  // afterUpdate: async (model, attrs, options) => {},
-
-  // Before destroying a value.
-  // Fired before a `delete` query.
-  // beforeDestroy: async (model, attrs, options) => {},
-
-  // After destroying a value.
-  // Fired after a `delete` query.
-  // afterDestroy: async (model, attrs, options) => {}
+      // console.log("data", params, data);
+      // const cart = await axios.post(`${getUrl}/carts`);
+      // const order = await axios.post(`${getUrl}/orders`);
+      // data.cart_id = cart.data.id;
+      // data.order_id = order.data.id;
+    },
+  },
 };

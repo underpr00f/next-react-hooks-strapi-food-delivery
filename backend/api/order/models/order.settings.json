@@ -15,11 +15,23 @@
     "city": {
       "type": "string"
     },
-    "dishes": {
+    "last_dishes": {
       "type": "json"
     },
     "amount": {
       "type": "biginteger"
+    },
+    "payed": {
+      "type": "boolean"
+    },
+    "cart": {
+      "model": "cart",
+      "via": "order"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "orders"
     }
   }
 }

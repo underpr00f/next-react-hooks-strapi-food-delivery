@@ -5,7 +5,7 @@ import Router from "next/router";
 import Cookie from "js-cookie";
 import axios from "axios";
 
-import { API_URL } from '../utils/constants'
+import { API_URL } from "../utils/constants";
 
 //register a new user
 export const registerUser = (username, email, password) => {
@@ -37,42 +37,49 @@ export const updateCart = (res) => {
   if (typeof window === "undefined") {
     return;
   }
-  return new Promise(function(resolve, reject) {
-    const cartID = res.data.user.cart_id
-    const jwtToken = res.data.jwt
+  return new Promise(function (resolve, reject) {
+    const cartID = res.data.user.cart_id;
+    const user_id = res.data.user.id;
+    const jwtToken = res.data.jwt;
 
     const cart_string = Cookie.get("cart");
 
     let cart_items = [];
     let cart_items_ids = [];
-    if (cart_string&&cart_string!=="undefined") {
-      cart_items = JSON.parse(cart_string)
-    }
-    
-    if (Array.isArray(cart_items) && cart_items.length) {
-      cart_items_ids = cart_items.map(choice => (choice.id))
+    if (cart_string && cart_string !== "undefined") {
+      cart_items = JSON.parse(cart_string);
     }
 
-    axios.put(`${API_URL}/carts/${cartID}`, JSON.stringify({
-          "elements": cart_items,
-          "dishes": cart_items_ids
-        }) ,{
-      headers: { 
-        Authorization: "Bearer " + jwtToken,
-        "Content-Type": "application/json"
-      }
-    })
-    // .then((response) => { 
-    //   console.log(response.data)
-    // })
-    .catch((error) => {
-      //reject the promise and pass the error object back to the form
-      reject(error);
-    });
+    if (Array.isArray(cart_items) && cart_items.length) {
+      cart_items_ids = cart_items.map((choice) => choice.id);
+    }
+
+    axios
+      .put(
+        `${API_URL}/carts/${cartID}`,
+        JSON.stringify({
+          elements: cart_items,
+          dishes: cart_items_ids,
+          user: user_id
+        }),
+        {
+          headers: {
+            Authorization: "Bearer " + jwtToken,
+            "Content-Type": "application/json"
+          }
+        }
+      )
+      // .then((response) => {
+      //   console.log(response.data)
+      // })
+      .catch((error) => {
+        //reject the promise and pass the error object back to the form
+        reject(error);
+      });
 
     resolve(res);
   });
-}
+};
 export const login = (identifier, password) => {
   //prevent function from being ran on the server
   if (typeof window === "undefined") {
