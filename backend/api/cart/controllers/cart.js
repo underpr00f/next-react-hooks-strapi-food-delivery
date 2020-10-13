@@ -18,39 +18,80 @@ module.exports = {
    *
    * @return {Object}
    */
+  create: async (ctx) => {
+    // const { address, amount, dishes, token, city, state } = JSON.parse(
+    //   ctx.request.body
+    // );
+    // const { address, amount, dishes, token, city, user_id } = ctx.request.body;
+    // let payed = false;
+    // const stripeAmount = Math.floor(amount * 100);
+    // charge on stripe
+    // const charge = await stripe.charges.create({
+    //   // Transform cents to dollars.
+    //   amount: stripeAmount,
+    //   currency: "usd",
+    //   description: `Order ${new Date()} by ${ctx.state.user._id}`,
+    //   source: token,
+    // });
+    //CHECK PAYED
+    // if (city === "Chicago") {
+    //   payed = true;
+    // }
 
+    ///////ПРОБЛЕМА С ЗАДВОЕНИЕМ ОРДЕРОВ
+    //////НУЖНО ДОБАВИТЬ В ЛАЙФХУК КОРЗИНЫ ПО АНАЛОГИИ С ЛАЙФХУКОМ ЮЗЕРА
+    console.log("CREATE!!!!!!!!!!!!");
+    const order = await strapi.services.order.create();
+    console.log("order", order._id);
+    const cart = await strapi.services.cart.create({
+      order: order._id,
+    });
+
+    return sanitizeEntity(cart, { model: strapi.models.cart });
+  },
   async update(ctx) {
     const { id } = ctx.params;
     const { user } = ctx.request.body;
-    console.log(ctx.request.body, id);
+    // console.log(user);
+    // console.log(ctx.request.body, ctx.params);
+    // let orderId = null;
     const entity = await strapi.services.cart.update({ id }, ctx.request.body);
     if (id && user) {
-      const existOrder = await strapi
-        .query("order")
-        .findOne({ cart: id, user: user });
+      const existOrder = await strapi.query("order").findOne({ cart: id });
 
       if (!existOrder) {
-        await strapi.query("order").create({
+        console.log("!existOrder");
+        await strapi.services.order.create({
           city: "MW",
           cart: id,
-          user: user,
+          user,
         });
+        // orderId = createOrder.id;
         // return sanitizeEntity(createOrder, { model: strapi.models.order });
       } else {
         console.log("existed", existOrder);
         await strapi.services.order.update(
           { id: existOrder._id },
           {
-            city: "BMW",
+            // city: "BMW",
           }
         );
+
+        // orderId = existOrder.id;
         // const order = await strapi.services.order.createOrUpdate({ city: "NEW" });
         // return order;
         //   return sanitizeEntity(order, { model: strapi.models.order });
         // return sanitizeEntity(updateOrder, { model: strapi.models.order });
       }
     }
+    // console.log("CART!", { ...ctx.request.body, order: orderId });
+    // const entity = await strapi.services.cart.update(
+    //   { id },
+    //   { ...ctx.request.body, order: orderId }
+    // );
 
+    // console.log("entity", entity);
+    // return entity;
     return sanitizeEntity(entity, { model: strapi.models.cart });
   },
   /**

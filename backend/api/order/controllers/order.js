@@ -16,38 +16,38 @@ module.exports = {
    * @return {Object}
    */
 
-  create: async (ctx) => {
-    // const { address, amount, dishes, token, city, state } = JSON.parse(
-    //   ctx.request.body
-    // );
-    // const { address, amount, dishes, token, city, user_id } = ctx.request.body;
-    // let payed = false;
-    // const stripeAmount = Math.floor(amount * 100);
-    // charge on stripe
-    // const charge = await stripe.charges.create({
-    //   // Transform cents to dollars.
-    //   amount: stripeAmount,
-    //   currency: "usd",
-    //   description: `Order ${new Date()} by ${ctx.state.user._id}`,
-    //   source: token,
-    // });
-    //CHECK PAYED
-    // if (city === "Chicago") {
-    //   payed = true;
-    // }
-    // console.log("HI", city, address, user_id);
-    // Register the order in the database
-    // const order = await strapi.services.order.create({
-    //   user: user_id,
-    //   amount,
-    //   address,
-    //   dishes,
-    //   city,
-    //   payed,
-    // });
-    // return order;
-    // return order;
-  },
+  // create: async (ctx) => {
+  // const { address, amount, dishes, token, city, state } = JSON.parse(
+  //   ctx.request.body
+  // );
+  // const { address, amount, dishes, token, city, user_id } = ctx.request.body;
+  // let payed = false;
+  // const stripeAmount = Math.floor(amount * 100);
+  // charge on stripe
+  // const charge = await stripe.charges.create({
+  //   // Transform cents to dollars.
+  //   amount: stripeAmount,
+  //   currency: "usd",
+  //   description: `Order ${new Date()} by ${ctx.state.user._id}`,
+  //   source: token,
+  // });
+  //CHECK PAYED
+  // if (city === "Chicago") {
+  //   payed = true;
+  // }
+  // console.log("HI", city, address, user_id);
+  // Register the order in the database
+  // const order = await strapi.services.order.create({
+  //   user: user_id,
+  //   amount,
+  //   address,
+  //   dishes,
+  //   city,
+  //   payed,
+  // });
+  // return order;
+  // return order;
+  // },
   update: async (ctx) => {
     const {
       order_id,

@@ -1,0 +1,19 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/users/me/orders",
+      "handler": "User.getUserOrders",
+      "config": {
+        "policies": [],
+        "prefix": "",
+        "description": "Retrieve the logged in user extended information",
+        "tag": {
+          "plugin": "users-permissions",
+          "name": "User",
+          "actionType": "findOne"
+        }
+      }
+    }
+  ]
+}
