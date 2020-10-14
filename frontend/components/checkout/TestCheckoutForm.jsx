@@ -164,7 +164,6 @@ function TestCheckoutForm() {
           body,
           html {
             background-color: #f6f9fc;
-            font-size: 18px;
             font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
           }
           h1 {

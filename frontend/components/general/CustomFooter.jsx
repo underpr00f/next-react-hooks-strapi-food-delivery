@@ -5,7 +5,7 @@ import { linksArray } from "../../constants/constants";
 import { BottomNavItem } from "../../MUI/Atoms/BottomNavItem";
 import { MaterialFooter } from "../../MUI/Molecules/MaterialFooter";
 
-export const Footer = () => {
+export const CustomFooter = () => {
   return (
     <>
       <MaterialFooter>

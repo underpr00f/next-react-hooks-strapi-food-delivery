@@ -7,7 +7,7 @@ import Link from "next/link";
 import { logout } from "../lib/auth";
 import AppContext from "../context/AppContext";
 import CartToggle from "./cart/CartToggle";
-import { Footer } from "./general/Footer";
+import { CustomFooter } from "./general/CustomFooter";
 import { NavLink } from "../MUI/Molecules/ButtonLink";
 import { CustomizedMenus } from "../MUI/Organisms/CustomizedMenus";
 
@@ -154,7 +154,7 @@ const Layout = (props) => {
         <Container>{props.children}</Container>
       </div>
       <footer>
-        <Footer />
+        <CustomFooter />
       </footer>
     </div>
   );
