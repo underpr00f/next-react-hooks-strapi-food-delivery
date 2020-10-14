@@ -1,50 +1,47 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 
-import Box from "@material-ui/core/Box";
-
-import Typography from "@material-ui/core/Typography";
-// import { makeStyles } from "@material-ui/core/styles";
-// import Container from "@material-ui/core/Container";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      {/* <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "} */}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-// const useStyles = makeStyles((theme) => ({
-//   paper: {
-//     marginTop: theme.spacing(8),
-//     display: "flex",
-//     flexDirection: "column",
-//     alignItems: "center"
-//   },
-//   avatar: {
-//     margin: theme.spacing(1),
-//     backgroundColor: theme.palette.secondary.main
-//   },
-//   form: {
-//     width: "100%", // Fix IE 11 issue.
-//     marginTop: theme.spacing(1)
-//   },
-//   submit: {
-//     margin: theme.spacing(3, 0, 2)
-//   }
-// }));
+import { linksArray } from "../../constants/constants";
+import { BottomNavItem } from "../../MUI/Atoms/BottomNavItem";
+import { MaterialFooter } from "../../MUI/Molecules/MaterialFooter";
 
 export const Footer = () => {
   return (
     <>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
+      <MaterialFooter>
+        <div className="container footer-container">
+          <div className="footer-logo">
+            <img
+              src="https://images.unsplash.com/photo-1551150441-3f3828204ef0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
+              alt="footer-logo"
+            />
+          </div>
+          <div className="footer-list">
+            {linksArray.map((linkElement) => (
+              <BottomNavItem
+                key={linkElement.linkName}
+                text={linkElement.linkName}
+                value={linkElement.linkValue}
+              />
+            ))}
+          </div>
+          <div className="footer-contact">
+            <ul>
+              <li>Свяжитесь с нами:</li>
+              <li>info@boutique.com</li>
+              <li>109241, г. Москва, Котельническая наб., д. 117</li>
+              <li>8 800 123 33 24</li>
+            </ul>
+          </div>
+          <div className="footer-copyright">
+            {new Date().getFullYear()} - created by underproof
+          </div>
+        </div>
+      </MaterialFooter>
     </>
   );
 };
+
+// FooterBar.propTypes = {
+//   yourUrl: PropTypes.string,
+// }

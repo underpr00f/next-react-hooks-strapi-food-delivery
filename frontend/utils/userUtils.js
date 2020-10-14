@@ -1,6 +1,8 @@
 import Cookie from "js-cookie";
 import axios from "axios";
 import { API_URL } from "./constants";
+import { toast } from "react-toastify";
+import { ToastMessage } from "../components/general/ToastMessage";
 
 export const userFetch = () => {
   const token = Cookie.get("token");
@@ -24,6 +26,7 @@ export const userFetch = () => {
     })
     .catch((err) => {
       console.error(err);
+      toast.error(ToastMessage(err.response.statusText));
       return null;
     });
 };
@@ -50,6 +53,7 @@ export const userOrdersFetch = () => {
     })
     .catch((err) => {
       console.error(err);
+      toast.error(ToastMessage(err.response.statusText));
       return null;
     });
 };

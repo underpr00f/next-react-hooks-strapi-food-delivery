@@ -1,10 +1,12 @@
 /* components/MyOrdersPage/index.js */
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
+
 import Cookie from "js-cookie";
 import AppContext from "../../context/AppContext";
 import { userOrdersFetch } from "../../utils/userUtils";
 import { LoaderContent } from "../Loaders/LoaderContent";
+import { OrderTable } from "../../MUI/Organisms/OrderTable";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -56,26 +58,23 @@ function MyOrdersPage(props) {
 
   useEffect(() => {
     //check token
-    const token = Cookie.get("token");
-    if (token) {
-      //get user and cart from db
+    //get user and cart from db
 
-      const fetchData = async () => {
-        setIsLoading(true);
-        const orders = await userOrdersFetch();
-        //   const result = await axios(url);
-        //   try {
-        //     const response = await fetch("http://localhost:1337/auth/local", {
-        //       method: "POST",
-        //       headers: { "Content-Type": "application/json" },
-        //       body: JSON.stringify({ identifier: email, password: password })
-        //     });
+    const fetchData = async () => {
+      setIsLoading(true);
+      const orders = await userOrdersFetch();
+      //   const result = await axios(url);
+      //   try {
+      //     const response = await fetch("http://localhost:1337/auth/local", {
+      //       method: "POST",
+      //       headers: { "Content-Type": "application/json" },
+      //       body: JSON.stringify({ identifier: email, password: password })
+      //     });
 
-        setData(orders);
-        setIsLoading(false);
-      };
-      fetchData();
-    }
+      setData(orders);
+      setIsLoading(false);
+    };
+    fetchData();
   }, []);
   console.log(data);
   //date format from isostring
@@ -91,37 +90,13 @@ function MyOrdersPage(props) {
       {isLoading ? (
         <LoaderContent />
       ) : (
-        <ul>
-          {data.length ? (
-            data.map((item, index) => {
-              if (item.payed) {
-                return (
-                  <li key={item.id}>
-                    {item.last_dishes.map((dish, i) => {
-                      // console.log(item.id + dish.id);
-                      return (
-                        <div key={item.id + dish.id}>
-                          <span>
-                            {dish.name} x {dish.quantity} = {dish.price}
-                          </span>
-                        </div>
-                      );
-                    })}{" "}
-                    <b>Total: {item.amount}</b>
-                    <br />
-                    <small>DATE: {parseISOString(item.updatedAt)}</small>
-                  </li>
-                );
-              } else if (index > 0) {
-                return null;
-              }
-
-              return <h3>Have not orders yet</h3>;
-            })
+        <>
+          {data && data.length ? (
+            <OrderTable data={data} />
           ) : (
             <h3>Have not orders yet</h3>
           )}
-        </ul>
+        </>
       )}
     </>
   );

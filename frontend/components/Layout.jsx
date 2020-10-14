@@ -8,16 +8,35 @@ import { logout } from "../lib/auth";
 import AppContext from "../context/AppContext";
 import CartToggle from "./cart/CartToggle";
 import { Footer } from "./general/Footer";
-import { makeStyles } from "@material-ui/core/styles";
 import { NavLink } from "../MUI/Molecules/ButtonLink";
+import { CustomizedMenus } from "../MUI/Organisms/CustomizedMenus";
+
+import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Container from "@material-ui/core/Container";
+import IconButton from "@material-ui/core/IconButton";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
     "& .Toastify__toast--info": {
       background: theme.palette.primary.dark
+    },
+    "& footer": {
+      flexShrink: 0
+    }
+  },
+  content: {
+    flex: "1 0 auto",
+
+    [theme.breakpoints.down("xs")]: {
+      "& .MuiToolbar-root>a": {
+        display: "none"
+      }
     }
   },
   menuLeft: {
@@ -40,6 +59,19 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1
+  },
+  logoutButton: {
+    "& button": {
+      display: "none"
+    },
+    [theme.breakpoints.down("xs")]: {
+      "& .nav-link": {
+        display: "none"
+      },
+      "& button": {
+        display: "inline-flex"
+      }
+    }
   }
 }));
 
@@ -56,51 +88,74 @@ const Layout = (props) => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <script src="https://js.stripe.com/v3" />
       </Head>
-      <header>
-        <style jsx>
-          {`
-            a {
-              color: white;
-            }
-            h5 {
-              color: white;
-              padding-top: 11px;
-            }
-          `}
-        </style>
-        <AppBar position="static">
-          <Toolbar>
-            <NavLink name="Home" hrefValue="/" />
-            <div className={classes.menuLeft}>
-              {user ? (
-                <>
-                  <CartToggle user={user.username} />
-                  <NavLink name={user.username} hrefValue="/my-orders" />
-                  <Link href="/">
-                    <a
-                      className="nav-link"
-                      onClick={() => {
-                        logout();
-                        setUser(null);
-                      }}
-                    >
-                      Logout
-                    </a>
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <CartToggle user={null} />
-                  <NavLink name="Sign up" hrefValue="/register" />
-                  <NavLink name="Sign in" hrefValue="/login" />
-                </>
-              )}
-            </div>
-          </Toolbar>
-        </AppBar>
-      </header>
-      <Container>{props.children}</Container>
-      <Footer />
+      <div className={classes.content}>
+        <header>
+          <style jsx>
+            {`
+              a {
+                color: white;
+              }
+              h5 {
+                color: white;
+                padding-top: 11px;
+              }
+            `}
+          </style>
+          <AppBar position="static">
+            <Toolbar>
+              <CustomizedMenus />
+              <NavLink name="Home" hrefValue="/" />
+              <div className={classes.menuLeft}>
+                {user ? (
+                  <>
+                    <CartToggle user={user.username} />
+                    <NavLink name={user.username} hrefValue="/my-orders" />
+                    <div className={classes.logoutButton}>
+                      <Link href="/">
+                        <a
+                          className="nav-link"
+                          onClick={() => {
+                            logout();
+                            setUser(null);
+                          }}
+                        >
+                          Logout
+                        </a>
+                      </Link>
+                      <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        aria-controls="customized-menu"
+                        aria-haspopup="true"
+                        // variant="contained"
+                        // color="primary"
+                        onClick={() => {
+                          logout();
+                          setUser(null);
+                        }}
+                      >
+                        <ExitToAppIcon />
+                      </IconButton>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <CartToggle user={null} />
+                    <NavLink name="Sign up" hrefValue="/register" />
+                    <NavLink name="Sign in" hrefValue="/login" />
+                  </>
+                )}
+              </div>
+            </Toolbar>
+          </AppBar>
+        </header>
+
+        <Container>{props.children}</Container>
+      </div>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 };
