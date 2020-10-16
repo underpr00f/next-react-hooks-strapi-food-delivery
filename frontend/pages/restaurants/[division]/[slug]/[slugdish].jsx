@@ -91,7 +91,7 @@ export default function Dishes(props) {
                 </Typography>
                 <Typography
                   gutterBottom
-                  variant="p"
+                  variant="body2"
                   component="h3"
                   className={classes.cardTitle}
                 >
@@ -108,7 +108,7 @@ export default function Dishes(props) {
               </CardContent>
               <CardActions>
                 <Button
-                  outline
+                  outline={"true"}
                   color="primary"
                   variant="contained"
                   onClick={() => appContext.addItem(props.data)}

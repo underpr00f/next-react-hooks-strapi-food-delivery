@@ -8,6 +8,7 @@ import { login } from "../lib/auth";
 import AppContext from "../context/AppContext";
 import { ToastMessage } from "../components/general/ToastMessage";
 import { RenderField } from "../MUI/Atoms/RenderField";
+import { ButtonLink } from "../MUI/Molecules/ButtonLink";
 import { validateEmailInput } from "../utils/Validators";
 
 import Avatar from "@material-ui/core/Avatar";
@@ -132,14 +133,21 @@ export default function Login() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
+                <ButtonLink
+                  name={"Forgot password?"}
+                  variant="text"
+                  color="secondary"
+                  hrefValue={`#`}
+                  asValue={`#`}
+                />
               </Grid>
-              <Grid item>
-                <Link href="/register" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
+              <Grid item xs>
+                <ButtonLink
+                  name={"Don't have an account? Sign Up"}
+                  variant="text"
+                  color="secondary"
+                  hrefValue={`/register`}
+                />
               </Grid>
             </Grid>
           </form>
