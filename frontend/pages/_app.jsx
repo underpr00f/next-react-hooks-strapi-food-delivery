@@ -11,7 +11,7 @@ import Loader from "../components/Loaders/Loader";
 
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import theme from "../MUI/theme";
+import { theme } from "../MUI/theme";
 
 import {
   manageCart,
@@ -31,7 +31,8 @@ class MyApp extends App {
     user: null,
     cart: { items: [], total: 0, orderId: null },
     isLoading: false,
-    cartLoaded: false
+    cartLoaded: false,
+    isDark: false
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -48,6 +49,7 @@ class MyApp extends App {
   }
   async componentDidMount() {
     const jssStyles = document.querySelector("#jss-server-side");
+
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
@@ -61,6 +63,8 @@ class MyApp extends App {
     Router.events.on("routeChangeError", () => {
       this.setState({ isLoading: false });
     });
+
+    this.getIsDark();
 
     //check token
     const token = Cookie.get("token");
@@ -80,7 +84,12 @@ class MyApp extends App {
       // restore cart from cookie, without db
       const cart = checkItemAndTotalCart();
       // if items in cart, set items and total from cookie
-      this.setState({ cart, user: null, cartLoaded: true });
+      this.setState({
+        cart,
+        user: null,
+        cartLoaded: true
+        // isDark: this.getIsDark()
+      });
     }
   }
 
@@ -94,8 +103,17 @@ class MyApp extends App {
   };
   setCart = async (cart_id) => {
     const cart = await setCartUtil(cart_id);
-    console.log(cart.orderId);
     this.setState({ cart, cartLoaded: true });
+  };
+  getIsDark = () => {
+    const isDark =
+      JSON.parse(localStorage.getItem("isDark")) || this.state.isDark;
+    // return localStorage.getItem("isDark") || this.state.isDark;
+    this.setState({ isDark: isDark });
+  };
+  setTheme = (isDark) => {
+    localStorage.setItem("isDark", isDark);
+    this.setState({ isDark: isDark });
   };
   addItem = (objectItem) => {
     let { items } = this.state.cart;
@@ -274,19 +292,21 @@ class MyApp extends App {
 
   render() {
     const { Component, pageProps } = this.props;
-    const { isLoading } = this.state;
+    const { isLoading, user, cart, cartLoaded, isDark } = this.state;
     return (
       <>
         <AppContext.Provider
           value={{
-            user: this.state.user,
-            isAuthenticated: !!this.state.user,
+            user: user,
+            isAuthenticated: !!user,
             setUser: this.setUser,
+            cart: cart,
+            cartLoaded: cartLoaded,
             setCart: this.setCart,
-            cart: this.state.cart,
-            cartLoaded: this.state.cartLoaded,
             addItem: this.addItem,
-            removeItem: this.removeItem
+            removeItem: this.removeItem,
+            isDark: isDark,
+            setTheme: this.setTheme
           }}
         >
           <Head>
@@ -297,7 +317,7 @@ class MyApp extends App {
             crossOrigin="anonymous"
           /> */}
           </Head>
-          <ThemeProvider theme={theme}>
+          <ThemeProvider theme={theme(isDark)}>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
             <Layout>

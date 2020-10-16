@@ -3,14 +3,9 @@ import { linksArray } from "../../constants/constants";
 import CustomLink from "../Atoms/CustomLink";
 
 import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import SendIcon from "@material-ui/icons/Send";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 
@@ -57,16 +52,13 @@ export const CustomizedMenus = () => {
   };
 
   return (
-    <div>
+    <div className="nav-mobileButton">
       <IconButton
         edge="start"
-        // className={classes.menuButton}
         color="inherit"
         aria-label="menu"
         aria-controls="customized-menu"
         aria-haspopup="true"
-        // variant="contained"
-        // color="primary"
         onClick={handleClick}
       >
         <MenuIcon />

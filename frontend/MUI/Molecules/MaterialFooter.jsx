@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
       margin: "auto"
     },
     "& .footer-contact": {
-      width: "30%",
+      width: "40%",
       color: `${theme.palette.primary.contrastText}`
     },
     "& .footer-list": {

@@ -29,15 +29,18 @@ const useStyles = makeStyles((theme) => ({
     margin: 0
   },
   iconButton: {
+    "&:hover": {
+      backgroundColor: "rgba(0, 0, 0, 0.1)"
+    },
     "& svg": {
-      fontSize: "1rem"
+      fontSize: "1rem",
+      fill: theme.palette.text.primary
     }
   }
 }));
-function CartToggle({ user }) {
+function CartToggle() {
   const classes = useStyles();
   const appContext = useContext(AppContext);
-  const router = useRouter();
   const [hoverRef, isHovered] = useHover();
   const { cart, isAuthenticated } = appContext;
 

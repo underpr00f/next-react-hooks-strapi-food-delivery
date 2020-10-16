@@ -1,7 +1,7 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import PropTypes from "prop-types";
-// import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 // const useStyles = makeStyles((theme) => ({
 //   "@global": {
@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 //     }
 //   }
 // }));
+// MuiOutlinedInput-input
 export const RenderField = ({
   validationType,
   nameType,
@@ -18,7 +19,7 @@ export const RenderField = ({
   focusField,
   errors
 }) => {
-  //   const classes = useStyles();
+  // const classes = useStyles();
   return (
     <>
       <TextField
