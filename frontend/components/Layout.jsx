@@ -12,7 +12,7 @@ import Container from "@material-ui/core/Container";
 
 const Layout = (props) => {
   const title = "Welcome to Nextjs";
-  const { user, setUser } = useContext(AppContext);
+  const { user, setUserFunc, handleLogouted } = useContext(AppContext);
 
   return (
     <MaterialLayout>
@@ -24,7 +24,11 @@ const Layout = (props) => {
       </Head>
       <div className="content">
         <header>
-          <CustomHeader user={user} setUser={setUser} />
+          <CustomHeader
+            user={user}
+            setUserFunc={setUserFunc}
+            handleLogouted={handleLogouted}
+          />
         </header>
         <Container>{props.children}</Container>
       </div>

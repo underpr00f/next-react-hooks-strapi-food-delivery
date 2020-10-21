@@ -36,9 +36,21 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
+
+    "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
+      color: theme.palette.text.primary
+    },
     "& .MuiOutlinedInput-input": {
       boxShadow: "none",
-      WebkitTextFillColor: theme.palette.primary.main
+
+      "&:-webkit-autofill": {
+        WebkitTextFillColor: theme.palette.text.primary,
+        WebkitBoxShadow: `0 0 0 30px ${theme.palette.primary.light} inset !important`,
+        "&:hover,:focus,:active": {
+          WebkitTextFillColor: theme.palette.text.primary,
+          WebkitBoxShadow: `0 0 0 30px ${theme.palette.primary.light} inset !important`
+        }
+      }
     }
   },
   submit: {
@@ -60,7 +72,7 @@ export default function Login() {
     login(e.identifier, e.password)
       .then((res) => {
         // set authed User in global context to update header/app state
-        appContext.setUser(res.data.user);
+        appContext.setUserFunc(res.data.user);
         // setLoading(false);
       })
       .catch((error) => {

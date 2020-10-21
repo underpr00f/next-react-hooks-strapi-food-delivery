@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
       padding: "3rem 0 0",
       flex: "1 1 100%",
       textAlign: "center",
-      opacity: 0.8
+      opacity: 0.8,
+      color: `${theme.palette.primary.contrastText}`
     },
     "& img": {
       width: "100px",

@@ -1,11 +1,16 @@
 /* _app.js */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import App from "next/app";
 import Head from "next/head";
 import Cookie from "js-cookie";
 import Layout from "../components/Layout";
 import AppContext from "../context/AppContext";
-import withData from "../lib/apollo";
+// import withData from "../lib/apollo";
+
+import { ApolloProvider } from "@apollo/react-hooks";
+import withApollo from "../lib/apollo";
+
+import { parserCookies } from "../lib/parserCookies";
 import Router from "next/router";
 import Loader from "../components/Loaders/Loader";
 
@@ -26,28 +31,18 @@ import "react-toastify/dist/ReactToastify.min.css";
 import { toast } from "react-toastify";
 import { ToastMessage } from "../components/general/ToastMessage";
 
-class MyApp extends App {
-  state = {
-    user: null,
-    cart: { items: [], total: 0, orderId: null },
-    isLoading: false,
-    cartLoaded: false,
-    isDark: false
-  };
+function MyApp({ Component, pageProps, apollo }) {
+  const isDarkCookie = pageProps && pageProps.isDarkCookie;
 
-  componentDidUpdate(prevProps, prevState) {
-    //logout state clear.
-    if (prevState.user !== this.state.user && this.state.user === null) {
-      this.setState({
-        cart: {
-          items: [],
-          total: 0,
-          orderId: null
-        }
-      });
-    }
-  }
-  async componentDidMount() {
+  const [user, setUser] = useState(null);
+  const [logouted, setLogouted] = useState(false);
+  const [cart, setCart] = useState({ items: [], total: 0, orderId: null });
+  const [cartLoaded, setCartLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [manageObjectItem, setManageObjectItem] = useState(null);
+  const [isDark, setIsDark] = useState(isDarkCookie || false);
+
+  useEffect(() => {
     const jssStyles = document.querySelector("#jss-server-side");
 
     if (jssStyles) {
@@ -55,267 +50,214 @@ class MyApp extends App {
     }
     Router.events.on("routeChangeStart", (url) => {
       console.log(`Loading: ${url}`);
-      this.setState({ isLoading: true });
+      setIsLoading(true);
     });
     Router.events.on("routeChangeComplete", () => {
-      this.setState({ isLoading: false });
+      setIsLoading(false);
     });
     Router.events.on("routeChangeError", () => {
-      this.setState({ isLoading: false });
+      setIsLoading(false);
     });
-
-    this.getIsDark();
-
     //check token
     const token = Cookie.get("token");
-    if (token) {
-      //get user and cart from db
-      const user = await userFetch();
-      if (!user) {
-        this.setState({
-          user: null,
-          cart: { items: [], total: 0, orderId: null },
-          cartLoaded: true
-        });
-        return null;
+    async function getStateFunc() {
+      if (token) {
+        //get user and cart from db
+        const user = await userFetch();
+        if (!user) {
+          setUser(null);
+          setCart({ items: [], total: 0, orderId: null });
+          setCartLoaded(true);
+          return null;
+        }
+        setUser(user);
+      } else {
+        // restore cart from cookie, without db
+        const cart = checkItemAndTotalCart();
+        // if items in cart, set items and total from cookie
+        setUser(null);
+        setCart(cart);
+        setCartLoaded(true);
       }
-      this.setUser(user);
-    } else {
-      // restore cart from cookie, without db
-      const cart = checkItemAndTotalCart();
-      // if items in cart, set items and total from cookie
-      this.setState({
-        cart,
-        user: null,
-        cartLoaded: true
-        // isDark: this.getIsDark()
-      });
     }
-  }
+    getStateFunc();
+    return () => {};
+  }, []);
 
-  setUser = (user) => {
-    this.setState({ user }, () => {
-      if (user && user.cart_id) {
-        // setCart(user.cart_id)
-        this.setCart(user.cart_id);
+  useEffect(() => {
+    if (user && user.cart_id) {
+      setCartFunc(user.cart_id);
+    }
+    return () => {};
+  }, [user]);
+
+  useEffect(() => {
+    if (logouted && user === null) {
+      //logout?
+      setCart({ items: [], total: 0, orderId: null });
+    }
+    return () => {};
+  }, [logouted]);
+
+  useEffect(() => {
+    if (manageObjectItem) {
+      let newCart = null;
+      async function getCartFunc() {
+        if (user && user.cart_id) {
+          console.log(cart.items);
+          newCart = await manageCart(user.cart_id, cart.items, user.id);
+        } else {
+          console.log(cart, cart.items);
+          newCart = await manageCookieCart(
+            manageObjectItem && manageObjectItem.id,
+            cart.items
+          );
+        }
+        if (newCart) {
+          setCart(newCart);
+          Cookie.set("cart", newCart.items);
+        } else {
+          console.error("WHAT THE HECK");
+        }
       }
-    });
-  };
-  setCart = async (cart_id) => {
-    const cart = await setCartUtil(cart_id);
-    this.setState({ cart, cartLoaded: true });
-  };
-  getIsDark = () => {
-    const isDark =
-      JSON.parse(localStorage.getItem("isDark")) || this.state.isDark;
-    // return localStorage.getItem("isDark") || this.state.isDark;
-    this.setState({ isDark: isDark });
-  };
-  setTheme = (isDark) => {
-    localStorage.setItem("isDark", isDark);
-    this.setState({ isDark: isDark });
-  };
-  addItem = (objectItem) => {
-    let { items } = this.state.cart;
-    let { user } = this.state;
+      getCartFunc();
+    }
+    return () => {};
+  }, [manageObjectItem]);
 
-    // cart object item
-    let addObjectItem = {
+  const setUserFunc = (user) => {
+    setUser(user);
+    setLogouted(false);
+  };
+  const handleLogouted = () => {
+    setLogouted(true);
+  };
+  const setCartFunc = async (cart_id) => {
+    const cart = await setCartUtil(cart_id);
+    // console.log(cart);
+    setCart(cart);
+    setCartLoaded(true);
+  };
+  // getIsDark = () => {
+  //   const isDark = JSON.parse(Cookie.get("isDark") || this.props.isDark);
+  //   // console.log(isDark, JSON.parse(Cookie.get("isDark")), this.props.isDark);
+  //   // return localStorage.getItem("isDark") || this.state.isDark;
+  //   this.setState({ isDark: isDark });
+  // };
+  const setTheme = (setCookieDark) => {
+    setIsDark(setCookieDark);
+    Cookie.set("isDark", JSON.stringify(setCookieDark));
+  };
+
+  const addItem = (objectItem) => {
+    let { items } = cart;
+
+    setManageObjectItem({
       id: objectItem.id,
       name: objectItem.name,
       price: objectItem.price
-    };
-
+    });
     //check for item already in cart
     //if not in cart, add item if item is found increase quanity ++
-    const newItem = items.find((i) => i.id === addObjectItem.id);
-    let newCart = null;
+    const newItem = items.find((i) => i.id === objectItem.id);
+    // let newCart = null;
     toast.info(ToastMessage(objectItem.name, "add"));
 
     // if item is not new, add to cart, set quantity to 1
     if (!newItem) {
       //set quantity property to 1
-      addObjectItem.quantity = 1;
-
-      this.setState(
-        {
-          cart: {
-            items: [...items, addObjectItem],
-            total: this.state.cart.total + addObjectItem.price,
-            orderId: this.state.cart.orderId
+      setCart({
+        items: [
+          ...items,
+          {
+            id: objectItem.id,
+            name: objectItem.name,
+            price: objectItem.price,
+            quantity: 1
           }
-        },
-        async () => {
-          if (user && user.cart_id) {
-            newCart = await manageCart(
-              user.cart_id,
-              this.state.cart.items,
-              user.id
-            );
-          } else {
-            newCart = await manageCookieCart(
-              addObjectItem.id,
-              this.state.cart.items
-            );
-          }
-          if (newCart) {
-            this.setState({ cart: newCart });
-            Cookie.set("cart", newCart.items);
-          } else {
-            console.error("WHAT THE HECK");
-          }
-        }
-      );
+        ],
+        total: cart.total + objectItem.price,
+        orderId: cart.orderId
+      });
     } else {
-      this.setState(
-        {
-          cart: {
-            items: this.state.cart.items.map((item) =>
-              item.id === newItem.id
-                ? Object.assign({}, item, { quantity: item.quantity + 1 })
-                : item
-            ),
-            total: this.state.cart.total + addObjectItem.price,
-            orderId: this.state.cart.orderId
-          }
-        },
-        async () => {
-          if (user && user.cart_id) {
-            newCart = await manageCart(
-              user.cart_id,
-              this.state.cart.items,
-              user.id
-            );
-          } else {
-            newCart = await manageCookieCart(
-              addObjectItem.id,
-              this.state.cart.items
-            );
-          }
-          if (newCart) {
-            this.setState({ cart: newCart });
-            Cookie.set("cart", newCart.items);
-          } else {
-            console.error("WHAT THE HECK");
-          }
-        }
-      );
+      setCart({
+        items: cart.items.map((item) =>
+          item.id === newItem.id
+            ? Object.assign({}, item, { quantity: item.quantity + 1 })
+            : item
+        ),
+        total: cart.total + objectItem.price,
+        orderId: cart.orderId
+      });
     }
   };
-  removeItem = (item) => {
-    let { items } = this.state.cart;
-    let { user } = this.state;
+  const removeItem = (item) => {
+    let { items } = cart;
+
     // cart object item
-    let removeObjectItem = {
+    setManageObjectItem({
       id: item.id,
       name: item.name,
       price: item.price
-    };
+    });
+
     toast.info(ToastMessage(item.name, "remove"), {
       className: "black-background"
     });
     //check for item already in cart
     //if not in cart, add item if item is found increase quanity ++
     const newItem = items.find((i) => i.id === item.id);
-    let newCart = null;
+    // let newCart = null;
 
     if (newItem.quantity > 1) {
-      this.setState(
-        {
-          cart: {
-            items: this.state.cart.items.map((item) =>
-              item.id === newItem.id
-                ? Object.assign({}, item, { quantity: item.quantity - 1 })
-                : item
-            ),
-            total: this.state.cart.total - item.price,
-            orderId: this.state.cart.orderId
-          }
-        },
-        async () => {
-          if (user && user.cart_id) {
-            newCart = await manageCart(
-              user.cart_id,
-              this.state.cart.items,
-              user.id
-            );
-          } else {
-            newCart = await manageCookieCart(
-              removeObjectItem.id,
-              this.state.cart.items
-            );
-          }
-          if (newCart) {
-            this.setState({ cart: newCart });
-            Cookie.set("cart", newCart.items);
-          } else {
-            console.error("WHAT THE HECK");
-          }
-        }
-      );
+      setCart({
+        items: cart.items.map((item) =>
+          item.id === newItem.id
+            ? Object.assign({}, item, { quantity: item.quantity - 1 })
+            : item
+        ),
+        total: cart.total - item.price,
+        orderId: cart.orderId
+      });
     } else {
-      const items = [...this.state.cart.items];
+      const items = [...cart.items];
       const index = items.findIndex((i) => i.id === newItem.id);
 
       items.splice(index, 1);
-      this.setState(
-        {
-          cart: {
-            items: items,
-            total: this.state.cart.total - item.price,
-            orderId: this.state.cart.orderId
-          }
-        },
-        async () => {
-          if (user && user.cart_id) {
-            newCart = await manageCart(
-              user.cart_id,
-              this.state.cart.items,
-              user.id
-            );
-          } else {
-            newCart = await manageCookieCart(
-              removeObjectItem.id,
-              this.state.cart.items
-            );
-          }
-          if (newCart) {
-            this.setState({ cart: newCart });
-            Cookie.set("cart", newCart.items);
-          } else {
-            console.error("WHAT THE HECK");
-          }
-        }
-      );
+      setCart({
+        items: items,
+        total: cart.total - item.price,
+        orderId: cart.orderId
+      });
     }
   };
 
-  render() {
-    const { Component, pageProps } = this.props;
-    const { isLoading, user, cart, cartLoaded, isDark } = this.state;
-    return (
-      <>
+  // const { Component, pageProps } = props;
+  // const { isLoading, user, cart, cartLoaded, isDark } = state;
+  return (
+    <>
+      <ApolloProvider client={apollo}>
         <AppContext.Provider
           value={{
-            user: user,
+            user,
             isAuthenticated: !!user,
-            setUser: this.setUser,
-            cart: cart,
-            cartLoaded: cartLoaded,
-            setCart: this.setCart,
-            addItem: this.addItem,
-            removeItem: this.removeItem,
-            isDark: isDark,
-            setTheme: this.setTheme
+            setUserFunc,
+            cart,
+            cartLoaded,
+            setCartFunc,
+            handleLogouted,
+            addItem,
+            removeItem,
+            isDark,
+            setTheme
           }}
         >
           <Head>
-            {/* <link
-            rel="stylesheet"
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-            crossOrigin="anonymous"
-          /> */}
+            {/* PWA primary color */}
+            <meta
+              name="theme-color"
+              content={theme(isDark).palette.primary.main}
+            />
           </Head>
           <ThemeProvider theme={theme(isDark)}>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
@@ -333,10 +275,24 @@ class MyApp extends App {
             {isLoading && <Loader />}
           </ThemeProvider>
         </AppContext.Provider>
-      </>
-    );
-  }
+      </ApolloProvider>
+    </>
+  );
 }
 
-export default withData(MyApp);
-// export default withApollo(MyApp);
+MyApp.getInitialProps = async ({ Component, ctx }) => {
+  let pageProps = {};
+  if (Component.getInitialProps) {
+    pageProps = await Component.getInitialProps(ctx);
+  }
+  let isDarkCookie;
+  const cookies = parserCookies(ctx.req);
+  isDarkCookie = cookies && cookies.isDark && JSON.parse(cookies.isDark);
+
+  // expose the query to the user
+  pageProps.query = ctx.query;
+  pageProps.isDarkCookie = isDarkCookie;
+  return { pageProps };
+};
+
+export default withApollo(MyApp);

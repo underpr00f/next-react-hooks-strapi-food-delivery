@@ -94,22 +94,22 @@ export default function Restaurants(props) {
 
                   <style jsx>
                     {`
-                      a {
-                        color: white;
-                      }
-                      a:link {
-                        text-decoration: none;
-                        color: white;
-                      }
+                      // a {
+                      //   color: white;
+                      // }
+                      // a:link {
+                      //   text-decoration: none;
+                      //   color: white;
+                      // }
                       .container-fluid {
                         margin-bottom: 30px;
                       }
-                      .btn-outline-primary {
-                        color: #007bff !important;
-                      }
-                      a:hover {
-                        color: white !important;
-                      }
+                      // .btn-outline-primary {
+                      //   color: #007bff !important;
+                      // }
+                      // a:hover {
+                      //   color: white !important;
+                      // }
                       .card-text {
                         display: -webkit-box;
                         -webkit-line-clamp: 3;

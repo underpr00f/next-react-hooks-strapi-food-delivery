@@ -9,6 +9,7 @@ import TestCheckoutForm from "../components/checkout/TestCheckoutForm";
 import AppContext from "../context/AppContext";
 
 import Cart from "../components/cart/CartPage";
+import { MaterialCheckout } from "../MUI/Organisms/MaterialCheckout";
 
 function Checkout() {
   // get app context
@@ -20,7 +21,7 @@ function Checkout() {
   const stripePromise = loadStripe("YOUR STRIPE PUBLIC KEY pk_");
 
   return (
-    <Grid container spacing={2}>
+    <MaterialCheckout>
       <Grid item xs={12} md={6}>
         <h1 style={{ margin: 20 }}>Checkout</h1>
         <Cart isAuthenticated={isAuthenticated} />
@@ -30,7 +31,7 @@ function Checkout() {
           <TestCheckoutForm />
         </Elements>
       </Grid>
-    </Grid>
+    </MaterialCheckout>
   );
   // }
 }

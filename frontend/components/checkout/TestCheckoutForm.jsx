@@ -11,6 +11,7 @@ import AppContext from "../../context/AppContext";
 import { checkoutCart } from "../../utils/cartUtils";
 import { ToastMessage } from "../general/ToastMessage";
 
+import Paper from "@material-ui/core/Paper";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 
@@ -35,7 +36,7 @@ function TestCheckoutForm() {
 
   async function submitOrder() {
     // event.preventDefault();
-    const { user, cart, setCart } = appContext;
+    const { user, cart, setCartFunc } = appContext;
     // let checkout = null;
     // // Use elements.getElement to get a reference to the mounted Element.
     // const cardElement = elements.getElement(CardElement);
@@ -61,7 +62,7 @@ function TestCheckoutForm() {
       // console.log("checkout", checkout);
       if (checkout) {
         //check cart from backend
-        setCart(user.cart_id);
+        setCartFunc(user.cart_id);
         setLoading(false);
         toast.info(ToastMessage("order confirmed"));
       } else {
@@ -103,7 +104,7 @@ function TestCheckoutForm() {
   }
 
   return (
-    <div className="paper">
+    <>
       <h5>Your information:</h5>
       <hr />
       <FormControl style={{ display: "flex" }}>
@@ -144,17 +145,17 @@ function TestCheckoutForm() {
 
       <style jsx global>
         {`
-          .paper {
-            border: 1px solid lightgray;
-            box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
-              0px 1px 1px 0px rgba(0, 0, 0, 0.14),
-              0px 2px 1px -1px rgba(0, 0, 0, 0.12);
-            height: 550px;
-            padding: 30px;
-            background: #fff;
-            border-radius: 6px;
-            margin-top: 90px;
-          }
+          // .paper {
+          //   border: 1px solid lightgray;
+          //   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
+          //     0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+          //     0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+          //   height: 550px;
+          //   padding: 30px;
+          //   background: #fff;
+          //   border-radius: 6px;
+          //   margin-top: 90px;
+          // }
           .form-half {
             flex: 0.5;
           }
@@ -252,7 +253,7 @@ function TestCheckoutForm() {
           }
         `}
       </style>
-    </div>
+    </>
   );
 }
 export default TestCheckoutForm;

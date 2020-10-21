@@ -6,8 +6,8 @@ import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles((theme) => ({
   link: {
-    color: "#fff",
-    opacity: "0.85",
+    color: theme.palette.primary.contrastText,
+    // opacity: "0.85",
     borderRadius: "0",
     textDecoration: "none",
     "&:hover": {

@@ -9,11 +9,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 
-const StyledMenu = withStyles({
+const StyledMenu = withStyles((theme) => ({
   paper: {
-    border: "1px solid #d3d4d5"
+    border: "1px solid",
+    borderColor: theme.palette.text.primary
   }
-})((props) => (
+}))((props) => (
   <Menu
     elevation={0}
     getContentAnchorEl={null}
@@ -33,9 +34,12 @@ const StyledMenuItem = withStyles((theme) => ({
   root: {
     "&:focus": {
       // backgroundColor: theme.palette.secondary.light,
-      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
-        // color: theme.palette.common.white
-      }
+      // "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+      //   color: theme.palette.common.white
+      // }
+    },
+    "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+      color: theme.palette.text.primary
     }
   }
 }))(MenuItem);

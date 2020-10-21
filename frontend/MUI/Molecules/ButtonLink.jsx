@@ -4,9 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
 const useStyles = makeStyles((theme) => ({
   btnLink: {
-    // color: "#f8f8f8",
-    // color: theme.palette.primary.main,
-    // "&:hover": { color: "#ffffff" }
+    color: theme.palette.common.white,
+    backgroundColor: theme.palette.secondary.main,
+    "&:hover": { backgroundColor: theme.palette.secondary.dark }
   },
   navLink: {
     color: "#ffffff",

@@ -60,7 +60,7 @@ export const Register = () => {
       .then(updateCart)
       .then((res) => {
         // set authed user in global context object
-        appContext.setUser(res.data.user);
+        appContext.setUserFunc(res.data.user);
       })
       .catch((error) => {
         console.error(error);

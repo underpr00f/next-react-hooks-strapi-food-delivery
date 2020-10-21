@@ -38,6 +38,7 @@ const getCartObject = (correctCart, orderId) => {
 export const manageCart = (cart_id, cart_items, user_id) => {
   const token = Cookie.get("token");
   if (token) {
+    console.log("cart_items", cart_items);
     const cart_items_ids = cart_items.map((choice) => choice.id);
     return axios
       .put(
@@ -182,6 +183,7 @@ export const setCartUtil = (cart_id) => {
 
 export const checkItemAndTotalCart = () => {
   const cart = Cookie.get("cart");
+
   // if items in cart, set items and total from cookie
   if (typeof cart === "string" && cart !== "undefined") {
     let sumTotal = 0;
@@ -193,6 +195,7 @@ export const checkItemAndTotalCart = () => {
       total: sumTotal
     };
   }
+
   return {
     items: [],
     total: 0,

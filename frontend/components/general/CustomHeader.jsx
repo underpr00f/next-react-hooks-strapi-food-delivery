@@ -12,7 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { ThemeIndicator } from "./ThemeIndicator";
 
-export const CustomHeader = ({ user, setUser }) => {
+export const CustomHeader = ({ user, setUserFunc, handleLogouted }) => {
   return (
     <>
       <MaterialHeader>
@@ -38,7 +38,8 @@ export const CustomHeader = ({ user, setUser }) => {
                     className="nav-link"
                     onClick={() => {
                       logout();
-                      setUser(null);
+                      setUserFunc(null);
+                      handleLogouted();
                     }}
                   >
                     Logout
@@ -52,7 +53,8 @@ export const CustomHeader = ({ user, setUser }) => {
                   aria-haspopup="true"
                   onClick={() => {
                     logout();
-                    setUser(null);
+                    setUserFunc(null);
+                    handleLogouted();
                   }}
                 >
                   <ExitToAppIcon />
