@@ -9,21 +9,29 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": { backgroundColor: theme.palette.secondary.dark }
   },
   navLink: {
-    color: "#ffffff",
+    color: theme.palette.common.white,
     opacity: 0.5,
     marginRight: theme.spacing(2),
     "&.active": {
       opacity: 0.8
     },
     "&:hover": {
-      color: "#ffffff",
+      color: theme.palette.common.white,
       opacity: 1
     }
   },
   simpleLink: {
-    // color: "#f8f8f8",
-    // color: theme.palette.primary.main,
-    // "&:hover": { color: "#ffffff" }
+    color: theme.palette.text.primary,
+    opacity: 0.5,
+    marginRight: theme.spacing(2),
+    textTransform: "none",
+    "&.active": {
+      opacity: 0.8
+    },
+    "&:hover": {
+      color: theme.palette.text.primary,
+      opacity: 1
+    }
   }
 }));
 
@@ -52,6 +60,19 @@ export const NavLink = ({ name, hrefValue }) => {
       component={CustomLink}
       href={hrefValue}
       className={classes.navLink}
+    >
+      {name}
+    </Link>
+  );
+};
+export const SimpleLink = ({ name, hrefValue }) => {
+  const classes = useStyles();
+  return (
+    <Link
+      variant="button"
+      component={CustomLink}
+      href={hrefValue}
+      className={classes.simpleLink}
     >
       {name}
     </Link>

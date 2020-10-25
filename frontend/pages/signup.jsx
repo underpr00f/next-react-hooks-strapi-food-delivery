@@ -5,12 +5,13 @@ import { toast } from "react-toastify";
 import { registerUser, updateCart } from "../lib/auth";
 import AppContext from "../context/AppContext";
 import { RenderField } from "../MUI/Atoms/RenderField";
+import { SubmitButton } from "../MUI/Atoms/SubmitButton";
 import { validateEmailInput } from "../utils/Validators";
+import { MaterialForm } from "../MUI/Organisms/MaterialForm";
+import { ToastMessage } from "../components/general/ToastMessage";
 
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -26,10 +27,6 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
@@ -70,9 +67,6 @@ export const Register = () => {
         setLoading(false);
       });
   };
-  //   function onChange(event) {
-  //     updateData({ ...data, [event.target.name]: event.target.value });
-  //   }
 
   return (
     <>
@@ -83,49 +77,44 @@ export const Register = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign Up
           </Typography>
-          <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-            <RenderField
-              validationType={register({
-                required: true,
-                minLength: 3
-              })}
-              focusField={true}
-              shortName="Your username"
-              nameType="username"
-              focusField={true}
-              errors={errors}
-            />
-            <RenderField
-              validationType={register({
-                required: true,
-                minLength: 3,
-                validate: validateEmailInput
-              })}
-              shortName="Your email"
-              nameType="identifier"
-              errors={errors}
-            />
-            <RenderField
-              validationType={register({
-                required: true,
-                minLength: 3
-              })}
-              shortName="Your password"
-              nameType="password"
-              typeField="password"
-              errors={errors}
-            />
-            <Button
-              style={{ float: "right", width: 120 }}
-              color="primary"
-              disabled={loading}
-              type="submit"
-            >
-              {loading ? "Loading... " : "Signup"}
-            </Button>
-          </form>
+          <MaterialForm>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <RenderField
+                validationType={register({
+                  required: true,
+                  minLength: 3
+                })}
+                focusField={true}
+                shortName="your username*"
+                nameType="username"
+                focusField={true}
+                errors={errors}
+              />
+              <RenderField
+                validationType={register({
+                  required: true,
+                  minLength: 3,
+                  validate: validateEmailInput
+                })}
+                shortName="your email*"
+                nameType="identifier"
+                errors={errors}
+              />
+              <RenderField
+                validationType={register({
+                  required: true,
+                  minLength: 3
+                })}
+                shortName="your password*"
+                nameType="password"
+                typeField="password"
+                errors={errors}
+              />
+              <SubmitButton text={"Signup"} loading={loading} />
+            </form>
+          </MaterialForm>
         </div>
       </Container>
     </>

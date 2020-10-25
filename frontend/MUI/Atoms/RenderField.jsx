@@ -26,7 +26,7 @@ export const RenderField = ({
         variant="outlined"
         margin="normal"
         fullWidth
-        label={`Введите ${shortName}`}
+        label={`Enter ${shortName}`}
         name={nameType}
         type={typeField || "text"}
         autoComplete={shortName}

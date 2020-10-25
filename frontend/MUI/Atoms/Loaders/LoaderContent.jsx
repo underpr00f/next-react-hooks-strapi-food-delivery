@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .line": {
-      backgroundColor: `${theme.palette.primary.light}`
+      backgroundColor: `${theme.palette.primary.contrastText}`
     }
   }
 }));
@@ -23,6 +23,7 @@ export const LoaderContent = () => {
         <style jsx>{`
           .loaduser {
             background-color: transparent;
+            transform: translate(0, -7.5px);
           }
 
           .line {
@@ -30,8 +31,6 @@ export const LoaderContent = () => {
             width: 10px;
             height: 10px;
             border-radius: 10px;
-            margin-bottom: 15px;
-            // background-color: #ccc;
           }
           .load-3 .line:nth-last-child(1) {
             animation: loadingC 0.6s 0.1s linear infinite;

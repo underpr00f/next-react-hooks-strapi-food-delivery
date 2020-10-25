@@ -15,15 +15,17 @@ function Checkout() {
   // get app context
   const appContext = useContext(AppContext);
   // isAuthenticated is passed to the cart component to display order button
-  const { user, isAuthenticated } = appContext;
+  const { isAuthenticated } = appContext;
 
   // load stripe to inject into elements components
   const stripePromise = loadStripe("YOUR STRIPE PUBLIC KEY pk_");
 
   return (
     <MaterialCheckout>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12}>
         <h1 style={{ margin: 20 }}>Checkout</h1>
+      </Grid>
+      <Grid item xs={12} md={6}>
         <Cart isAuthenticated={isAuthenticated} />
       </Grid>
       <Grid item xs={12} md={6}>

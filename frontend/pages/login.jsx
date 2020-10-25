@@ -8,8 +8,10 @@ import { login } from "../lib/auth";
 import AppContext from "../context/AppContext";
 import { ToastMessage } from "../components/general/ToastMessage";
 import { RenderField } from "../MUI/Atoms/RenderField";
-import { ButtonLink } from "../MUI/Molecules/ButtonLink";
+import { SimpleLink } from "../MUI/Molecules/ButtonLink";
 import { validateEmailInput } from "../utils/Validators";
+import { MaterialForm } from "../MUI/Organisms/MaterialForm";
+import { SubmitButton } from "../MUI/Atoms/SubmitButton";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -37,20 +39,8 @@ const useStyles = makeStyles((theme) => ({
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
 
-    "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
-      color: theme.palette.text.primary
-    },
-    "& .MuiOutlinedInput-input": {
-      boxShadow: "none",
-
-      "&:-webkit-autofill": {
-        WebkitTextFillColor: theme.palette.text.primary,
-        WebkitBoxShadow: `0 0 0 30px ${theme.palette.primary.light} inset !important`,
-        "&:hover,:focus,:active": {
-          WebkitTextFillColor: theme.palette.text.primary,
-          WebkitBoxShadow: `0 0 0 30px ${theme.palette.primary.light} inset !important`
-        }
-      }
+    "& .MuiGrid-container": {
+      marginTop: theme.spacing(3)
     }
   },
   submit: {
@@ -108,61 +98,59 @@ export default function Login() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-            <RenderField
-              validationType={register({
-                required: true,
-                minLength: 3,
-                validate: validateEmailInput
-              })}
-              shortName="Your email"
-              nameType="identifier"
-              focusField={true}
-              errors={errors}
-            />
-            <RenderField
-              validationType={register({
-                required: true,
-                minLength: 3
-              })}
-              shortName="Your password"
-              nameType="password"
-              typeField="password"
-              errors={errors}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              type="submit"
-            >
-              {loading ? "Loading... " : "Login"}
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <ButtonLink
-                  name={"Forgot password?"}
-                  variant="text"
-                  color="secondary"
-                  hrefValue={`#`}
-                  asValue={`#`}
-                />
+          <MaterialForm>
+            <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+              <RenderField
+                validationType={register({
+                  required: true,
+                  minLength: 3,
+                  validate: validateEmailInput
+                })}
+                shortName="Your email"
+                nameType="identifier"
+                focusField={true}
+                errors={errors}
+              />
+              <RenderField
+                validationType={register({
+                  required: true,
+                  minLength: 3
+                })}
+                shortName="Your password"
+                nameType="password"
+                typeField="password"
+                errors={errors}
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <SubmitButton
+                text={"Signup"}
+                loading={loading}
+                fullWidth={true}
+              />
+              <Grid container>
+                <Grid item xs>
+                  <SimpleLink
+                    name={"Forgot password?"}
+                    variant="text"
+                    // color="secondary"
+                    hrefValue={`#`}
+                    asValue={`#`}
+                  />
+                </Grid>
+                <Grid item xs>
+                  <SimpleLink
+                    name={"Don't have an account? Sign Up"}
+                    variant="text"
+                    // color="secondary"
+                    hrefValue={"/signup"}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs>
-                <ButtonLink
-                  name={"Don't have an account? Sign Up"}
-                  variant="text"
-                  color="secondary"
-                  hrefValue={`/register`}
-                />
-              </Grid>
-            </Grid>
-          </form>
+            </form>
+          </MaterialForm>
         </div>
       </Container>
     </>

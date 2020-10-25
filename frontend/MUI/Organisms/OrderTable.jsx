@@ -40,10 +40,8 @@ export const OrderTable = ({ data }) => {
   const classes = useStyles();
   const parseISOString = (s) => {
     var b = s.split(/\D+/);
-    console.log(s, b);
     return `${b[0]}-${b[1]}-${b[2]},  ${b[3]}:${b[4]}:${b[5]}`;
   };
-  console.log("ORDER", data);
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} size="small" aria-label="a dense table">

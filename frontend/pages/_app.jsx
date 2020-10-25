@@ -1,6 +1,6 @@
 /* _app.js */
 import React, { useState, useEffect } from "react";
-import App from "next/app";
+
 import Head from "next/head";
 import Cookie from "js-cookie";
 import Layout from "../components/Layout";
@@ -12,7 +12,7 @@ import withApollo from "../lib/apollo";
 
 import { parserCookies } from "../lib/parserCookies";
 import Router from "next/router";
-import Loader from "../components/Loaders/Loader";
+import Loader from "../MUI/Atoms/Loaders/Loader";
 
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -138,12 +138,7 @@ function MyApp({ Component, pageProps, apollo }) {
     setCart(cart);
     setCartLoaded(true);
   };
-  // getIsDark = () => {
-  //   const isDark = JSON.parse(Cookie.get("isDark") || this.props.isDark);
-  //   // console.log(isDark, JSON.parse(Cookie.get("isDark")), this.props.isDark);
-  //   // return localStorage.getItem("isDark") || this.state.isDark;
-  //   this.setState({ isDark: isDark });
-  // };
+
   const setTheme = (setCookieDark) => {
     setIsDark(setCookieDark);
     Cookie.set("isDark", JSON.stringify(setCookieDark));

@@ -16,8 +16,8 @@ export const themeLight = createMuiTheme({
       contrastText: "rgba(230, 229, 222, 1)"
     },
     secondary: {
-      light: "rgba(53, 221, 233, 1)",
-      main: "rgba(68, 64, 67, 1)",
+      light: "#9cbecf",
+      main: "#3a6c81",
       dark: "rgba(19, 24, 42, 1)",
       contrastText: "rgba(229, 229, 219, 1)"
     },

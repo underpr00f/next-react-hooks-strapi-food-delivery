@@ -2,8 +2,9 @@
 
 import React, { useContext } from "react";
 import { useRouter } from "next/router";
-import { ButtonLink } from "../../MUI/Molecules/ButtonLink";
-import { LoaderContent } from "../Loaders/LoaderContent";
+import { ButtonLink, SimpleLink } from "../../MUI/Molecules/ButtonLink";
+
+import { LoaderContent } from "../../MUI/Atoms/Loaders/LoaderContent";
 
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -123,12 +124,7 @@ function CartPage() {
               ) : (
                 <>
                   {router.pathname === "/checkout" && (
-                    <small
-                      style={{ color: "blue" }}
-                      onClick={() => window.history.back()}
-                    >
-                      back to restaurant
-                    </small>
+                    <SimpleLink name={"Back to restaurant"} hrefValue={"/"} />
                   )}
                 </>
               )

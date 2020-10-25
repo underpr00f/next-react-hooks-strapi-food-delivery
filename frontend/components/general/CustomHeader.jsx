@@ -64,7 +64,7 @@ export const CustomHeader = ({ user, setUserFunc, handleLogouted }) => {
           ) : (
             <>
               <CartToggle user={null} />
-              <NavLink name="Sign up" hrefValue="/register" />
+              <NavLink name="Sign up" hrefValue="/signup" />
               <NavLink name="Sign in" hrefValue="/login" />
             </>
           )}

@@ -3,8 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .loader": {
-      border: `8px solid ${theme.palette.primary.light}`,
-      borderTop: `8px solid ${theme.palette.primary.dark}`
+      border: `8px solid ${theme.palette.secondary.light}`,
+      borderTop: `8px solid ${theme.palette.secondary.dark}`
     }
   }
 }));

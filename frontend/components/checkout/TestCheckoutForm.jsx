@@ -14,6 +14,7 @@ import { ToastMessage } from "../general/ToastMessage";
 import Paper from "@material-ui/core/Paper";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
+import { MaterialForm } from "../../MUI/Organisms/MaterialForm";
 
 function TestCheckoutForm() {
   const [data, setData] = useState({
@@ -107,42 +108,43 @@ function TestCheckoutForm() {
     <>
       <h5>Your information:</h5>
       <hr />
-      <FormControl style={{ display: "flex" }}>
-        <div style={{ flex: "0.90", marginRight: 10, marginBottom: 10 }}>
-          <TextField
-            name="address"
-            label="Address"
-            variant="outlined"
-            onChange={onChange}
-          />
-        </div>
-      </FormControl>
-      <FormControl style={{ display: "flex" }}>
-        <div style={{ flex: "0.65", marginRight: "6%", marginBottom: 10 }}>
-          <TextField
-            name="city"
-            label="City"
-            variant="outlined"
-            onChange={onChange}
-          />
-        </div>
-        <div style={{ flex: "0.25", marginRight: 0, marginBottom: 10 }}>
-          <TextField
-            name="state"
-            label="State"
-            variant="outlined"
-            onChange={onChange}
-          />
-        </div>
-      </FormControl>
+      <MaterialForm>
+        <FormControl style={{ display: "flex" }}>
+          <div style={{ flex: "0.90", marginRight: 10, marginBottom: 10 }}>
+            <TextField
+              name="address"
+              label="Address"
+              variant="outlined"
+              onChange={onChange}
+            />
+          </div>
+        </FormControl>
+        <FormControl style={{ display: "flex" }}>
+          <div style={{ flex: "0.65", marginRight: "6%", marginBottom: 10 }}>
+            <TextField
+              name="city"
+              label="City"
+              variant="outlined"
+              onChange={onChange}
+            />
+          </div>
+          <div style={{ flex: "0.25", marginRight: 0, marginBottom: 10 }}>
+            <TextField
+              name="state"
+              label="State"
+              variant="outlined"
+              onChange={onChange}
+            />
+          </div>
+        </FormControl>
 
-      <CardSection
-        data={data}
-        stripeError={error}
-        submitOrder={submitOrder}
-        loading={loading}
-      />
-
+        <CardSection
+          data={data}
+          stripeError={error}
+          submitOrder={submitOrder}
+          loading={loading}
+        />
+      </MaterialForm>
       <style jsx global>
         {`
           // .paper {
@@ -168,7 +170,6 @@ function TestCheckoutForm() {
             font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
           }
           h1 {
-            color: #32325d;
             font-weight: 400;
             line-height: 50px;
             font-size: 40px;
@@ -182,7 +183,6 @@ function TestCheckoutForm() {
             padding: 0 5px;
           }
           label {
-            color: #6b7c93;
             font-weight: 300;
             letter-spacing: 0.025em;
           }
@@ -194,15 +194,12 @@ function TestCheckoutForm() {
             height: 40px;
             line-height: 40px;
             padding: 0 14px;
-            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
-              0 1px 3px rgba(0, 0, 0, 0.08);
-            color: #fff;
+
             border-radius: 4px;
             font-size: 15px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.025em;
-            background-color: #6772e5;
             text-decoration: none;
             -webkit-transition: all 150ms ease;
             transition: all 150ms ease;
@@ -211,39 +208,26 @@ function TestCheckoutForm() {
           form {
             margin-bottom: 40px;
             padding-bottom: 40px;
-            border-bottom: 3px solid #e6ebf1;
           }
           button:hover {
-            color: #fff;
             cursor: pointer;
-            background-color: #7795f8;
             transform: translateY(-1px);
-            box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1),
-              0 3px 6px rgba(0, 0, 0, 0.08);
           }
           input,
           .StripeElement {
             display: block;
-            background-color: #f8f9fa !important;
             margin: 10px 0 20px 0;
             max-width: 500px;
             padding: 10px 14px;
             font-size: 1em;
             font-family: "Source Code Pro", monospace;
-            box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px,
-              rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
             border: 0;
             outline: 0;
             border-radius: 4px;
-            background: white;
           }
-          input::placeholder {
-            color: #aab7c4;
-          }
+
           input:focus,
           .StripeElement--focus {
-            box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px,
-              rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
             -webkit-transition: all 150ms ease;
             transition: all 150ms ease;
           }

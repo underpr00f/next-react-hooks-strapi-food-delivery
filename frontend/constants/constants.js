@@ -5,10 +5,9 @@ export const API_URL =
   process.env.NODE_ENV === "production" ? "" : "http://localhost:3000";
 
 export const linksArray = [
-  { linkName: "Главная", linkValue: "/" },
-  { linkName: "Моя Корзина", linkValue: "/cart" },
-  { linkName: "Мои Заказы", linkValue: "/my-orders" },
-  { linkName: "Batman", linkValue: "/items" }
+  { linkName: "Main", linkValue: "/" },
+  { linkName: "My Cart", linkValue: "/cart" },
+  { linkName: "My Orders", linkValue: "/my-orders" }
 ];
 
 export const sliderArray = [

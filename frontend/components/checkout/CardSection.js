@@ -1,7 +1,7 @@
 /* components/Checkout/cardsection.js */
 
 import React from "react";
-
+import { FuncButton } from "../../MUI/Atoms/SubmitButton";
 import { CardElement } from "@stripe/react-stripe-js";
 
 function CardSection(props) {
@@ -21,11 +21,14 @@ function CardSection(props) {
                 />
               </div>
               <br />
-              <div className="order-button-wrapper">
-                <button onClick={props.submitOrder}>
-                  {props.loading ? "Paying..." : "Confirm order"}
-                </button>
-              </div>
+
+              <FuncButton
+                text={"Confirm order"}
+                variant="text"
+                typeBtn={"button"}
+                loading={props.loading}
+                funcBtn={props.submitOrder}
+              />
               {props.stripeError ? (
                 <div>{props.stripeError.toString()}</div>
               ) : null}
@@ -34,16 +37,6 @@ function CardSection(props) {
           </fieldset>
         </div>
       </div>
-      <style jsx>
-        {`
-          .order-button-wrapper {
-            display: flex;
-            width: 100%;
-            align-items: flex-end;
-            justify-content: flex-end;
-          }
-        `}
-      </style>
     </div>
   );
 }

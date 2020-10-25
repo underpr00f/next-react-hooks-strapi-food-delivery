@@ -1,34 +1,13 @@
 /* components/MyOrdersPage/index.js */
 import React, { useState, useEffect, useContext } from "react";
 
-import Cookie from "js-cookie";
 import AppContext from "../../context/AppContext";
 import { userOrdersFetch } from "../../utils/userUtils";
-import { LoaderContent } from "../Loaders/LoaderContent";
+import { LoaderContent } from "../../MUI/Atoms/Loaders/LoaderContent";
 import { OrderTable } from "../../MUI/Organisms/OrderTable";
 
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Typography from "@material-ui/core/Typography";
 
-import { ButtonLink } from "../../MUI/Molecules/ButtonLink";
-// const QUERY = gql`
-//   {
-//     restaurants {
-//       id
-//       name
-//       description
-//       image {
-//         url
-//       }
-//     }
-//   }
-// `;
 const useStyles = makeStyles({
   gridCont: {
     marginTop: "1em"
