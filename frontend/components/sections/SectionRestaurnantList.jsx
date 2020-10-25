@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import RestaurantList from "../../components/RestaurantList";
 
+import { MaterialForm } from "../../MUI/Organisms/MaterialForm";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -34,12 +35,14 @@ const SectionRestaurantList = (props) => {
           </Typography>
         </Grid>
         <Grid item xs={12} className={classes.gridCont}>
-          <TextField
-            onChange={(e) => updateQuery(e.target.value.toLocaleLowerCase())}
-            value={query}
-            label="Search"
-            margin="dense"
-          />
+          <MaterialForm>
+            <TextField
+              onChange={(e) => updateQuery(e.target.value.toLocaleLowerCase())}
+              value={query}
+              label="Search"
+              margin="dense"
+            />
+          </MaterialForm>
         </Grid>
       </Grid>
       <Grid container className={classes.gridContRest}>

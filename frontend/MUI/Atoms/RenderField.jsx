@@ -1,16 +1,7 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
 
-// const useStyles = makeStyles((theme) => ({
-//   "@global": {
-//     "form label": {
-//       color: "#000"
-//     }
-//   }
-// }));
-// MuiOutlinedInput-input
 export const RenderField = ({
   validationType,
   nameType,

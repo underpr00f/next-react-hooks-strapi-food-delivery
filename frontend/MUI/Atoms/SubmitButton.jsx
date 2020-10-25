@@ -47,7 +47,7 @@ export const FuncButton = ({
   variantBtn
 }) => {
   const classes = useStyles();
-  console.log(variantBtn);
+
   return (
     <>
       <Button

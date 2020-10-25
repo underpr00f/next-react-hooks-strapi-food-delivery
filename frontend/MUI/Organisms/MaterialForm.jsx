@@ -24,6 +24,12 @@ const useStyles = makeStyles((theme) => ({
     },
     "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
       borderColor: theme.palette.text.primary
+    },
+    "& .MuiFormLabel-root.MuiInputLabel-shrink": {
+      color: theme.palette.text.primary
+    },
+    "& .MuiInput-underline:after": {
+      borderBottomColor: theme.palette.text.primary
     }
   }
 }));
