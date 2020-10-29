@@ -7,7 +7,8 @@ export const API_URL =
 export const linksArray = [
   { linkName: "Main", linkValue: "/" },
   { linkName: "My Cart", linkValue: "/cart" },
-  { linkName: "My Orders", linkValue: "/my-orders" }
+  { linkName: "My Orders", linkValue: "/my-orders" },
+  { linkName: "Donate", linkValue: "/donate" }
 ];
 
 export const sliderArray = [
