@@ -15,10 +15,10 @@ const useStyles = makeStyles((theme) => ({
 
       "&:-webkit-autofill": {
         WebkitTextFillColor: theme.palette.text.primary,
-        WebkitBoxShadow: `0 0 0 30px ${theme.palette.primary.light} inset !important`,
+        WebkitBoxShadow: `0 0 0 30px ${theme.palette.background.paper} inset !important`,
         "&:hover,:focus,:active": {
           WebkitTextFillColor: theme.palette.text.primary,
-          WebkitBoxShadow: `0 0 0 30px ${theme.palette.primary.light} inset !important`
+          WebkitBoxShadow: `0 0 0 30px ${theme.palette.background.paper} inset !important`
         }
       }
     },

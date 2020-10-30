@@ -87,7 +87,7 @@ export default function SectionPricing() {
   return (
     <React.Fragment>
       {/* Hero unit */}
-      <Container maxWidth="sm" component="main" className={classes.heroContent}>
+      <Container component="main" className={classes.heroContent}>
         <Typography
           variant="h4"
           component="h3"
@@ -103,13 +103,13 @@ export default function SectionPricing() {
           color="textSecondary"
           component="p"
         >
-          Quickly build an effective pricing table for your potential customers
-          with this layout. It&apos;s built with default Material-UI components
-          with little customization.
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet
+          laborum perferendis accusantium porro obcaecati tempora aperiam
+          blanditiis, repellat et dolorem.
         </Typography>
       </Container>
       {/* End hero unit */}
-      <Container maxWidth="md" component="main">
+      <Container component="main">
         <Grid container spacing={5} alignItems="flex-end">
           {tiers.map((tier) => (
             // Enterprise card is full width at sm breakpoint
