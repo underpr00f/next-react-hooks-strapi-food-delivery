@@ -42,3 +42,4 @@ mongo "mongodb+srv://MYCLUSTER.mongodb.net/MYDB" --username MYUSER
 - Cart => create, findone, update
 - User-Permissions:
   - User=>me, update, getuserorders
+- Donate => findone, createorupdate, findlast

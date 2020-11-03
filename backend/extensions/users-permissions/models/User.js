@@ -36,8 +36,8 @@ module.exports = {
     // Before creating a value.
     // Fired before an `insert` query.
     beforeCreate: async (data, attrs, options) => {
-      console.log("beforeCreate");
-      console.log(getUrl);
+      // console.log("beforeCreate");
+      // console.log(getUrl);
       const cart = await axios.post(`${getUrl}/carts`);
       // model.set("cart_id", cart.data.id)
       data.cart_id = cart.data.id;

@@ -45,6 +45,17 @@ export default function Donate() {
                 focusField={true}
                 errors={errors}
               />
+              <RenderField
+                validationType={register({
+                  required: true,
+                  minLength: 3
+                })}
+                shortName="Total donate"
+                nameType="amount"
+                // id="amount"
+                focusField={true}
+                errors={errors}
+              />
               <FuncButton text={"Next"} />
             </div>
           </MaterialForm>

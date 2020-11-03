@@ -1,6 +1,6 @@
 /* /pages/restaurants.js */
 import React from "react";
-import Link from "next/link";
+// import Link from "next/link";
 import { useContext } from "react";
 import AppContext from "../../../context/AppContext";
 import { errorSlugChecker } from "../../../utils/errorChecker";
@@ -9,7 +9,7 @@ import { API_URL } from "../../../utils/constants";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
+// import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
