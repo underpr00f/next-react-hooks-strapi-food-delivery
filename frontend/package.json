@@ -17,8 +17,8 @@
     "js-cookie": "2.2.1",
     "next": "canary",
     "next-with-apollo": "^5.1.0",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "react": "latest",
+    "react-dom": "latest",
     "react-hook-form": "^6.9.0",
     "react-toastify": "^6.0.8"
   },
@@ -26,7 +26,17 @@
     "dev": "next",
     "build": "next build",
     "start": "NODE_ENV=production next start -p $PORT",
-    "heroku-postbuild": "next build"
+    "heroku-postbuild": "next build",
+    "test": "jest --watch --silent=false",
+    "test:ci": "jest --ci"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.5",
+    "@testing-library/react": "^11.1.1",
+    "babel-jest": "^26.6.3",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.6.3",
+    "react-test-renderer": "^17.0.1"
+  }
 }

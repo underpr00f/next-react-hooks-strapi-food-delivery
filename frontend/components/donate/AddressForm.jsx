@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
+import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
-import { DonateBtn } from "./DonateBtn";
-import { RenderField } from "../../MUI/Atoms/RenderField";
+import { DonateBtn } from './DonateBtn';
+import { ControllerField } from '../../MUI/Atoms/ControllerField';
 
 export default function AddressForm({
   message,
@@ -17,19 +17,12 @@ export default function AddressForm({
   handleBack,
   handleNext
 }) {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    errors,
-    setValue,
-    control
-  } = useForm();
-  const [messageNew, setMessageNew] = useState("");
+  const { register, handleSubmit, errors, setValue, control } = useForm();
+  const [messageNew, setMessageNew] = useState('');
   useEffect(() => {
     if (message) {
       setMessageNew(message);
-      setValue("message", message);
+      setValue('message', message);
     }
     return () => {};
   }, [message]);
@@ -46,35 +39,17 @@ export default function AddressForm({
       <form onSubmit={handleSubmit()}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
-            {/* <RenderField
-              validationType={register({
-                required: true,
-                minLength: 3
-              })}
-              defaultValue={messageNew}
-              fullWidth={true}
-              shortName="Your name"
+            <ControllerField
+              control={control}
+              register={register}
+              errors={errors}
+              messageNew={messageNew}
+              shortName="Your message"
               nameType="message"
               focusField={true}
-              errors={errors}
-            /> */}
-            <Controller
-              as={<TextField />}
-              defaultValue={messageNew}
-              name="message"
-              label="Username"
-              control={control}
-              value={messageNew}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="message"
-              autoComplete="Username"
-              autoFocus
-              onChange={([event]) => {
-                updateUserName(event);
-                return event.target.value;
+              validationTypeObj={{
+                required: true,
+                minLength: 3
               }}
             />
           </Grid>

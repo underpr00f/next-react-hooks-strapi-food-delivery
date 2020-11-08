@@ -1,30 +1,31 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Grid from "@material-ui/core/Grid";
-import { DonateBtn } from "./DonateBtn";
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Grid from '@material-ui/core/Grid';
+import { DonateBtn } from './DonateBtn';
 const products = [
-  { name: "Product 1", desc: "A nice thing", price: "$9.99" },
-  { name: "Product 2", desc: "Another thing", price: "$3.45" },
-  { name: "Product 3", desc: "Something else", price: "$6.51" },
-  { name: "Product 4", desc: "Best thing of all", price: "$14.11" },
-  { name: "Shipping", desc: "", price: "Free" }
+  { name: 'Product 1', desc: 'A nice thing', price: '$9.99' },
+  { name: 'Product 2', desc: 'Another thing', price: '$3.45' },
+  { name: 'Product 3', desc: 'Something else', price: '$6.51' },
+  { name: 'Product 4', desc: 'Best thing of all', price: '$14.11' },
+  { name: 'Shipping', desc: '', price: 'Free' }
 ];
 const addresses = [
-  "1 Material-UI Drive",
-  "Reactville",
-  "Anytown",
-  "99999",
-  "USA"
+  '1 Material-UI Drive',
+  'Reactville',
+  'Anytown',
+  '99999',
+  'USA'
 ];
 const payments = [
-  { name: "Card type", detail: "Visa" },
-  { name: "Card holder", detail: "Mr John Smith" },
-  { name: "Card number", detail: "xxxx-xxxx-xxxx-1234" },
-  { name: "Expiry date", detail: "04/2024" }
+  { name: 'Card type', detail: 'Visa' },
+  { name: 'Card holder', detail: 'Mr John Smith' },
+  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
+  { name: 'Expiry date', detail: '04/2024' }
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -40,20 +41,72 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Review({
+  message,
+  anothermessage,
   activeStep,
   isLastStep,
   handleBack,
   handleNext
 }) {
+  // const messages = [...message, anothermessage];
   const classes = useStyles();
-
+  const { register, control, handleSubmit, setValue, errors } = useForm();
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
-        {products.map((product) => (
+        <ListItem className={classes.listItem}>
+          <ListItemText secondary="Message" />
+          <Typography variant="subtitle1" className={classes.total}>
+            {message}
+          </Typography>
+        </ListItem>
+        <ListItem className={classes.listItem}>
+          <ListItemText secondary="Another Message" />
+          <Typography variant="subtitle1" className={classes.total}>
+            {anothermessage}
+          </Typography>
+        </ListItem>
+      </List>
+      <h4>Payment type</h4>
+      <form
+        method="POST"
+        action="https://money.yandex.ru/quickpay/confirm.xml"
+        // onSubmit={handleSubmit()}
+      >
+        <input type="hidden" name="receiver" value="4100xxxxxxxxxxxxxxx" />
+        <input
+          type="hidden"
+          name="formcomment"
+          value="‘Ironman’ Project: Arc Reactor"
+        />
+        <input
+          type="hidden"
+          name="short-dest"
+          value="‘Ironman’ Project: Arc Reactor"
+        />
+        <input type="hidden" name="label" value="$order_id" />
+        <input type="hidden" name="quickpay-form" value="donate" />
+        <input type="hidden" name="targets" value="transaction {order_id}" />
+        <input type="hidden" name="sum" value="50" data-type="number" />
+        <input type="hidden" name="comment" value="Requires remote control." />
+        {/* <input type="hidden" name="need-fio" value="true" />
+            <input type="hidden" name="need-email" value="true" />
+            <input type="hidden" name="need-phone" value="false" />
+            <input type="hidden" name="need-address" value="false" /> */}
+        <label>
+          <input type="radio" name="paymentType" value="PC" />
+          YooMoney
+        </label>{' '}
+        <label>
+          <input type="radio" name="paymentType" value="AC" />
+          With bank card
+        </label>{' '}
+        <input type="submit" value="Transfer" />
+      </form>
+      {/* {products.map((product) => (
           <ListItem className={classes.listItem} key={product.name}>
             <ListItemText primary={product.name} secondary={product.desc} />
             <Typography variant="body2">{product.price}</Typography>
@@ -72,7 +125,7 @@ export default function Review({
             Shipping
           </Typography>
           <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(", ")}</Typography>
+          <Typography gutterBottom>{addresses.join(', ')}</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
@@ -91,12 +144,13 @@ export default function Review({
             ))}
           </Grid>
         </Grid>
-      </Grid>
+      </Grid> */}
       <DonateBtn
         activeStep={activeStep}
         isLastStep={isLastStep}
         handleBack={handleBack}
         handleNext={handleNext}
+        handleSubmit={handleSubmit}
       />
     </React.Fragment>
   );

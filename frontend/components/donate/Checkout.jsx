@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import Cookie from 'js-cookie';
+import { makeStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
-import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-
-import Paper from "@material-ui/core/Paper";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import AddressForm from "./AddressForm";
-import PaymentForm from "./PaymentForm";
-import Review from "./Review";
-import { getLastDonate } from "../../utils/donateUtils";
+import Paper from '@material-ui/core/Paper';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import AddressForm from './AddressForm';
+import PaymentForm from './PaymentForm';
+import Review from './Review';
+import { getLastDonate } from '../../utils/donateUtils';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    position: "relative"
+    position: 'relative'
   },
   layout: {
-    width: "auto",
+    width: 'auto',
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
-      marginLeft: "auto",
-      marginRight: "auto"
+      marginLeft: 'auto',
+      marginRight: 'auto'
     }
   },
   paper: {
@@ -43,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3, 0, 5)
   },
   buttons: {
-    display: "flex",
-    justifyContent: "flex-end"
+    display: 'flex',
+    justifyContent: 'flex-end'
   },
   button: {
     marginTop: theme.spacing(3),
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const steps = ["Shipping address", "Payment details", "Review your order"];
+const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
 export default function Checkout() {
   const classes = useStyles();
@@ -61,11 +61,14 @@ export default function Checkout() {
 
   const [activeStep, setActiveStep] = useState(0);
   useEffect(() => {
+    const token = Cookie.get('token');
     async function fetchData() {
       // You can await here
-      const getInitialState = await getLastDonate();
+      const getInitialState = await getLastDonate(token);
       if (getInitialState) {
-        setFormValues({ message: getInitialState.message });
+        setFormValues({
+          ...getInitialState
+        });
       }
     }
     fetchData();
@@ -119,10 +122,10 @@ export default function Checkout() {
           />
         );
       default:
-        throw new Error("Unknown step");
+        throw new Error('Unknown step');
     }
   }
-  console.log("Checkoutformvalues", formValues);
+  // console.log('Checkoutformvalues', formValues);
   return (
     <React.Fragment>
       <CssBaseline />

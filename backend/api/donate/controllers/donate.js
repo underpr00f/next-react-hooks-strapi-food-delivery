@@ -116,7 +116,7 @@ module.exports = {
         console.log("UPDATE", results);
         donate = await strapi
           .query("donate")
-          .update({ id: results.id }, { message });
+          .update({ id: results.id }, ctx.request.body);
       }
       return sanitizeEntity(donate, { model: strapi.models.donate });
     } catch (err) {

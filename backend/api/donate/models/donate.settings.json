@@ -21,6 +21,9 @@
     "confirmed": {
       "type": "boolean",
       "default": false
+    },
+    "anothermessage": {
+      "type": "string"
     }
   }
 }

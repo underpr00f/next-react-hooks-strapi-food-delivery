@@ -1,17 +1,17 @@
 /* /pages/restaurants.js */
-import React from "react";
-import { useForm } from "react-hook-form";
+import React from 'react';
+import { useForm } from 'react-hook-form';
 // import { useContext } from "react";
-import MyOrdersPage from "../components/MyOrdersPage";
+import MyOrdersPage from '../components/MyOrdersPage';
 // import AppContext from "../../../context/AppContext";
 // import {errorSlugChecker} from "../../../utils/errorChecker";
 // import { API_URL } from "../../../utils/constants";
-import { RenderField } from "../MUI/Atoms/RenderField";
-import { MaterialForm } from "../MUI/Organisms/MaterialForm";
-import { FuncButton } from "../MUI/Atoms/SubmitButton";
+import { RenderField } from '../MUI/Atoms/RenderField';
+import { MaterialForm } from '../MUI/Organisms/MaterialForm';
+import { FuncButton } from '../MUI/Atoms/SubmitButton';
 
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({}));
 export default function Donate() {
@@ -56,7 +56,7 @@ export default function Donate() {
                 focusField={true}
                 errors={errors}
               />
-              <FuncButton text={"Next"} />
+              <FuncButton text={'Next'} />
             </div>
           </MaterialForm>
           <h4>Payment type</h4>
@@ -100,11 +100,11 @@ export default function Donate() {
             <label>
               <input type="radio" name="paymentType" value="PC" />
               YooMoney
-            </label>{" "}
+            </label>{' '}
             <label>
               <input type="radio" name="paymentType" value="AC" />
               With bank card
-            </label>{" "}
+            </label>{' '}
             <input type="submit" value="Transfer" />
           </form>
         </Grid>

@@ -1,19 +1,19 @@
-import Cookie from "js-cookie";
-import axios from "axios";
-import { API_URL } from "./constants";
+import Cookie from 'js-cookie';
+import axios from 'axios';
+import { API_URL } from './constants';
 export const manageDonate = (values) => {
-  const token = Cookie.get("token");
-  if (token) {
+  const token = Cookie.get('token');
+  if (token && values) {
     return axios
       .post(`${API_URL}/donates`, JSON.stringify(values), {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json'
         }
       })
       .then((res) => {
-        if (res.statusText !== "OK") {
-          console.log("Response bad, check how you manage cart");
+        if (res.statusText !== 'OK') {
+          console.log('Response bad, check how you manage cart');
           return null;
         }
         return res.data;
@@ -22,22 +22,21 @@ export const manageDonate = (values) => {
   }
   return null;
 };
-export const getLastDonate = () => {
-  const token = Cookie.get("token");
+export const getLastDonate = (token) => {
+  // const token = Cookie.get('token');
   if (token) {
     return axios
       .get(`${API_URL}/donates/last`, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json'
         }
       })
       .then((res) => {
-        if (res.statusText !== "OK") {
-          console.log("Response bad, check how you manage cart");
+        if (res.statusText !== 'OK') {
+          console.log('Response bad, check how you manage cart');
           return null;
         }
-        console.log(res.data);
         return res.data;
       })
       .catch((err) => console.error(err));
