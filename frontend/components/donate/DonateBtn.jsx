@@ -1,7 +1,7 @@
 /* /components/Checkout/CheckoutForm.js */
-
 import React, { useState, useEffect } from 'react';
 // import { useForm } from 'react-hook-form';
+import Cookie from 'js-cookie';
 import { MuiDonateBtn } from '../../MUI/Molecules/MuiDonateBtn';
 import { manageDonate } from '../../utils/donateUtils';
 import Button from '@material-ui/core/Button';
@@ -25,10 +25,10 @@ export const DonateBtn = ({
   }, [loading, submitted, newValues]);
 
   const onSubmit = async (values) => {
-    console.log('values', values);
+    const token = Cookie.get('token');
     setLoading(true);
     setNewValues(values);
-    const response = await manageDonate(values);
+    const response = await manageDonate(token, values);
     if (response) {
       setSubmitted(true);
     } else {
