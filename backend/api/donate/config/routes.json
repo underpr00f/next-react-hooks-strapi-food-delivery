@@ -47,6 +47,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "POST",
+      "path": "/donates/confirmed",
+      "handler": "donate.updateToConfirm",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }
