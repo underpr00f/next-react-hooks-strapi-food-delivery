@@ -1,5 +1,5 @@
 const hashChecker = require('../../utils/hashChecker').hashChecker
-require('dotenv').config()
+// require('dotenv').config()
 
 //NOTIFICATION SECRET NEED TO GET FROM YOOMONEY INTO .env YANDEX_MONEY_SECRET
 let fakeData
@@ -21,7 +21,7 @@ beforeEach(() => {
     label: ''
   }
 
-  notification_secret = process.env.YANDEX_MONEY_SECRET
+  notification_secret = "cNKku7BtSlGLVe8nEDVeUfH7"
 })
 describe('hashchecker sha', () => {
   test('hashchecker has secret', async () => {

@@ -81,7 +81,7 @@ module.exports = {
         .findOne({ user: id, confirmed: false })
 
       if (!obj) {
-        return null
+        return {}
       }
       // REMOVE USER FROM RESPONSE
       const blacklist = ["user"]
@@ -108,11 +108,17 @@ module.exports = {
       let donate
       if (!results) {
         console.log("CREATE")
-        donate = await strapi.services.donate.create({ message, user: id })
+
+        //ORDER NUMBER BY COUNT OF ALL
+        const currentOrder = await strapi.query('donate').count()
+
+        donate = await strapi.services.donate.create({ message, user: id, order_id: currentOrder + 1 })
       } else {
+        // const currentOrder = await strapi.query('donate').count()
+        // console.log(currentOrder)
         console.log("UPDATE")
         //blacklist confirm
-        const blacklist = ["confirmed"]
+        const blacklist = ["confirmed", "order_id"]
         const filteredRequestBody = filterObjWithBlacklist(blacklist, ctx.request.body)
 
         donate = await strapi

@@ -1,22 +1,22 @@
 /* /pages/restaurants.js */
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React from 'react'
+import { useForm } from 'react-hook-form'
 // import { useContext } from "react";
-import MyOrdersPage from '../components/MyOrdersPage';
+import MyOrdersPage from '../components/MyOrdersPage'
 // import AppContext from "../../../context/AppContext";
 // import {errorSlugChecker} from "../../../utils/errorChecker";
-// import { API_URL } from "../../../utils/constants";
-import { RenderField } from '../MUI/Atoms/RenderField';
-import { MaterialForm } from '../MUI/Organisms/MaterialForm';
-import { FuncButton } from '../MUI/Atoms/SubmitButton';
+import { YANDEX_WALLET_ID } from "../utils/constants"
+import { RenderField } from '../MUI/Atoms/RenderField'
+import { MaterialForm } from '../MUI/Organisms/MaterialForm'
+import { FuncButton } from '../MUI/Atoms/SubmitButton'
 
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({}))
 export default function Donate() {
-  const classes = useStyles();
-  const { register, handleSubmit, reset, errors } = useForm();
+  const classes = useStyles()
+  const { register, handleSubmit, reset, errors } = useForm()
 
   return (
     <>
@@ -62,9 +62,9 @@ export default function Donate() {
           <h4>Payment type</h4>
           <form
             method="POST"
-            action="https://money.yandex.ru/quickpay/confirm.xml"
+            action="https://yoomoney.ru/quickpay/confirm.xml"
           >
-            <input type="hidden" name="receiver" value="41001xxxxxxxxxxxx" />
+            <input type="hidden" name="receiver" value={YANDEX_WALLET_ID || ''} />
             <input
               type="hidden"
               name="formcomment"
@@ -110,7 +110,7 @@ export default function Donate() {
         </Grid>
       </Grid>
     </>
-  );
+  )
 }
 // export async function getServerSideProps(context) {
 //   const { slug, division } = context.query;

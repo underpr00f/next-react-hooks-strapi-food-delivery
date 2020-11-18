@@ -1,36 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
 
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import { ControllerField } from '../../MUI/Atoms/ControllerField';
-import { DonateBtn } from './DonateBtn';
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
+import TextField from '@material-ui/core/TextField'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import { ControllerField } from '../../MUI/Atoms/ControllerField'
+import { DonateBtn } from './DonateBtn'
+import { validateNumberInput } from "../../utils/Validators"
 
 export default function PaymentForm({
   message,
   anothermessage,
+  amount,
   activeStep,
   isLastStep,
   handleBack,
   handleNext
 }) {
   // const { register, handleSubmit, errors, setValue, control } = useForm();
-  console.log('Paymentmessage', message);
-  const { register, control, handleSubmit, setValue, errors } = useForm();
-  const [anothermessageNew, setAnothermessageNew] = useState('');
+  console.log('Paymentmessage', message)
+  const { register, control, handleSubmit, setValue, errors } = useForm()
+  const [anothermessageNew, setAnothermessageNew] = useState('')
+  const [amountNew, setAmountNew] = useState('0')
   useEffect(() => {
     if (anothermessage) {
-      setAnothermessageNew(anothermessage);
-      setValue('anothermessage', anothermessage);
+      setAnothermessageNew(anothermessage)
+      setValue('anothermessage', anothermessage)
     }
-    return () => {};
-  }, [anothermessage]);
+    if (amount) {
+      setAmountNew(amount)
+      setValue('amount', amount)
+    }
+    return () => { }
+  }, [anothermessage, amount])
 
   return (
-    <React.Fragment>
+    <>
       <Typography variant="h6" gutterBottom>
         Payment method
       </Typography>
@@ -41,13 +48,29 @@ export default function PaymentForm({
               control={control}
               register={register}
               errors={errors}
-              messageNew={anothermessageNew}
+              dataField={anothermessageNew}
               shortName="Your Another message"
               nameType="anothermessage"
               focusField={true}
               validationTypeObj={{
                 required: true,
                 minLength: 3
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <ControllerField
+              control={control}
+              register={register}
+              errors={errors}
+              dataField={amountNew}
+              shortName="Your Donate"
+              nameType="amount"
+              focusField={true}
+              validationTypeObj={{
+                required: true,
+                maxLength: 6,
+                validate: validateNumberInput
               }}
             />
           </Grid>
@@ -105,6 +128,6 @@ export default function PaymentForm({
           handleSubmit={handleSubmit}
         />
       </form>
-    </React.Fragment>
-  );
+    </>
+  )
 }

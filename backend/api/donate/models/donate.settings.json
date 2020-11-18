@@ -24,6 +24,12 @@
     },
     "anothermessage": {
       "type": "string"
+    },
+    "amount": {
+      "type": "biginteger"
+    },
+    "order_id": {
+      "type": "biginteger"
     }
   }
 }

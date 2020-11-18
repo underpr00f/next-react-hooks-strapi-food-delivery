@@ -5,7 +5,7 @@ import { Controller } from 'react-hook-form';
 
 export const ControllerField = ({
   control,
-  messageNew,
+  dataField,
   validationTypeObj,
   nameType,
   shortName,
@@ -18,13 +18,13 @@ export const ControllerField = ({
     <>
       <Controller
         as={<TextField />}
-        defaultValue={messageNew || ''}
+        defaultValue={dataField || ''}
         name={nameType}
         type={typeField || 'text'}
         autoComplete={shortName}
         label={`Enter ${shortName}`}
         control={control}
-        value={messageNew}
+        value={dataField}
         error={!!errors[nameType]}
         variant="outlined"
         margin="normal"
@@ -43,8 +43,11 @@ export const ControllerField = ({
             if (errors[nameType].type === 'minLength') {
               return 'This field must have more than 3 characters';
             }
+            if (errors[nameType].type === 'maxLength') {
+              return 'This field must have less than 6 characters';
+            }
             if (errors[nameType].type === 'validate') {
-              return 'Invalid email address';
+              return 'Invalid number';
             }
           }
           return '';

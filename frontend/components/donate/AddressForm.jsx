@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
 
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import TextField from '@material-ui/core/TextField'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
 
-import { DonateBtn } from './DonateBtn';
-import { ControllerField } from '../../MUI/Atoms/ControllerField';
+import { DonateBtn } from './DonateBtn'
+import { ControllerField } from '../../MUI/Atoms/ControllerField'
 
 export default function AddressForm({
   message,
@@ -17,15 +17,15 @@ export default function AddressForm({
   handleBack,
   handleNext
 }) {
-  const { register, handleSubmit, errors, setValue, control } = useForm();
-  const [messageNew, setMessageNew] = useState('');
+  const { register, handleSubmit, errors, setValue, control } = useForm()
+  const [messageNew, setMessageNew] = useState('')
   useEffect(() => {
     if (message) {
-      setMessageNew(message);
-      setValue('message', message);
+      setMessageNew(message)
+      setValue('message', message)
     }
-    return () => {};
-  }, [message]);
+    return () => { }
+  }, [message])
   // const updateUserName = (e) => {
   //   console.log(e.target.value);
   //   setUserName(e.target.value);
@@ -43,7 +43,7 @@ export default function AddressForm({
               control={control}
               register={register}
               errors={errors}
-              messageNew={messageNew}
+              dataField={messageNew}
               shortName="Your message"
               nameType="message"
               focusField={true}
@@ -148,5 +148,5 @@ export default function AddressForm({
         />
       </form>
     </React.Fragment>
-  );
+  )
 }
