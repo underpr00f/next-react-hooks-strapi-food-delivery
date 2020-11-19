@@ -1,28 +1,28 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import { toast } from "react-toastify";
-import { useForm } from "react-hook-form";
+import React, { useState, useEffect, useContext } from "react"
+import { useRouter } from "next/router"
+import Link from "next/link"
+import { toast } from "react-toastify"
+import { useForm } from "react-hook-form"
 
-import { login } from "../lib/auth";
-import AppContext from "../context/AppContext";
-import { ToastMessage } from "../components/general/ToastMessage";
-import { RenderField } from "../MUI/Atoms/RenderField";
-import { SimpleLink } from "../MUI/Molecules/ButtonLink";
-import { validateEmailInput } from "../utils/Validators";
-import { MaterialForm } from "../MUI/Organisms/MaterialForm";
-import { SubmitButton } from "../MUI/Atoms/SubmitButton";
+import { login } from "../lib/auth"
+import AppContext from "../context/AppContext"
+import { ToastMessage } from "../components/general/ToastMessage"
+import { RenderField } from "../MUI/Atoms/RenderField"
+import { SimpleLink } from "../MUI/Molecules/ButtonLink"
+import { validateEmailInput } from "../utils/Validators"
+import { MaterialForm } from "../MUI/Organisms/MaterialForm"
+import { SubmitButton } from "../MUI/Atoms/SubmitButton"
 
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import Avatar from "@material-ui/core/Avatar"
+import Button from "@material-ui/core/Button"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import FormControlLabel from "@material-ui/core/FormControlLabel"
+import Checkbox from "@material-ui/core/Checkbox"
+import Grid from "@material-ui/core/Grid"
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
+import Typography from "@material-ui/core/Typography"
+import { makeStyles } from "@material-ui/core/styles"
+import Container from "@material-ui/core/Container"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,46 +46,46 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2)
   }
-}));
+}))
 
 export default function Login() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const router = useRouter();
-  const appContext = useContext(AppContext);
-  const classes = useStyles();
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+  const router = useRouter()
+  const appContext = useContext(AppContext)
+  const classes = useStyles()
 
-  const { register, handleSubmit, reset, errors } = useForm();
+  const { register, handleSubmit, reset, errors } = useForm()
 
   const onSubmit = async (e) => {
-    setLoading(true);
+    setLoading(true)
     login(e.identifier, e.password)
       .then((res) => {
         // set authed User in global context to update header/app state
-        appContext.setUserFunc(res.data.user);
+        appContext.setUserFunc(res.data.user)
         // setLoading(false);
       })
       .catch((error) => {
-        console.error(error);
+        console.error(error)
         if (error.response && error.response.data) {
-          setError(error.response.data);
+          setError(error.response.data)
         }
-        setLoading(false);
-      });
-  };
+        setLoading(false)
+      })
+  }
   useEffect(() => {
     if (appContext.isAuthenticated) {
-      router.push("/"); // redirect if you're already logged in
+      router.push("/") // redirect if you're already logged in
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     if (Object.entries(error).length !== 0 && error.constructor === Object) {
       error.message.map((error) => {
-        toast.error(ToastMessage(error.messages[0].message));
-      });
+        toast.error(ToastMessage(error.messages[0].message))
+      })
     }
-  }, [error]);
+  }, [error])
 
   return (
     <>
@@ -145,7 +145,7 @@ export default function Login() {
                     name={"Don't have an account? Sign Up"}
                     variant="text"
                     // color="secondary"
-                    hrefValue={"/signup"}
+                    hrefValue={"/signin"}
                   />
                 </Grid>
               </Grid>
@@ -154,5 +154,5 @@ export default function Login() {
         </div>
       </Container>
     </>
-  );
+  )
 }

@@ -1,6 +1,7 @@
 const crypto = require("crypto")
 
 module.exports.hashChecker = (response, notification_secret) => {
+  console.log("hashChecker RESPONSE", response)
   const notification_type = response.notification_type
   const operation_id = response.operation_id
   const amount = response.amount

@@ -65,7 +65,8 @@ export const provideDonate = async (values) => {
       const response = await res.data
       return response
     } catch (err) {
-      console.error(err)
+      console.error(err.response.data)
+      // console.error(err)
     }
   }
   return null

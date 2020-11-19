@@ -34,7 +34,7 @@ mongo "mongodb+srv://MYCLUSTER.mongodb.net/MYDB" --username MYUSER
 - Cart => create, findone (Advanced settings Allow to perform this action for: isauthenticated), update (Advanced settings Allow to perform this action for: isauthenticated)
 - User-Permissions:
   - User=>me
-- Donate => count, updateToConfirm
+- Donate => updateToConfirm
 
 2. Authenticated
 
@@ -43,4 +43,4 @@ mongo "mongodb+srv://MYCLUSTER.mongodb.net/MYDB" --username MYUSER
 - Cart => create, findone, update
 - User-Permissions:
   - User=>me, update, getuserorders
-- Donate => findone, createorupdate, findlast
+- Donate => count, findone, createorupdate, findlast

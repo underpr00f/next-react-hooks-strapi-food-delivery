@@ -1,11 +1,11 @@
 // include this in your Jest setup file, or before your tests
-import next from 'next';
-import { hashChecker } from '../../utils/hashChecker';
+import next from 'next'
+import { hashChecker } from '../../utils/hashChecker'
 
-next({ dev: true });
+next({ dev: true })
 
-let fakeData;
-let notification_secret;
+let fakeData
+let notification_secret
 
 beforeEach(() => {
   fakeData = {
@@ -21,15 +21,15 @@ beforeEach(() => {
     operation_id: 'test-notification',
     currency: '643',
     label: ''
-  };
-
-  notification_secret = process.env.NEXT_PUBLIC_YANDEX_MONEY_SECRET;
-});
+  }
+  notification_secret = "cNKku7BtSlGLVe8nEDVeUfH7"
+  // notification_secret = process.env.NEXT_PUBLIC_YANDEX_MONEY_SECRET;
+})
 describe('hashchecker sha', () => {
   test('hashchecker has secret', async () => {
-    expect(notification_secret).toBeTruthy();
-  });
+    expect(notification_secret).toBeTruthy()
+  })
   test('hashchecker sha test', async () => {
-    expect(hashChecker(fakeData, notification_secret)).toBeTruthy();
-  });
-});
+    expect(hashChecker(fakeData, notification_secret)).toBeTruthy()
+  })
+})

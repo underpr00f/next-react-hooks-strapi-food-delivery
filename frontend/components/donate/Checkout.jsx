@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import Cookie from 'js-cookie';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-
-import Paper from '@material-ui/core/Paper';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import AddressForm from './AddressForm';
-import PaymentForm from './PaymentForm';
-import Review from './Review';
-import { getLastDonate } from '../../utils/donateUtils';
+import React, { useState, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import Cookie from 'js-cookie'
+import { makeStyles } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import Paper from '@material-ui/core/Paper'
+import Stepper from '@material-ui/core/Stepper'
+import Step from '@material-ui/core/Step'
+import StepLabel from '@material-ui/core/StepLabel'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import AddressForm from './AddressForm'
+import PaymentForm from './PaymentForm'
+import Review from './Review'
+import { getLastDonate } from '../../utils/donateUtils'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -50,46 +50,48 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1)
   }
-}));
+}))
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Shipping address', 'Payment details', 'Review your order']
 
 export default function Checkout() {
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const [formValues, setFormValues] = useState({});
+  const matches = useMediaQuery('(max-width:600px)')
 
-  const [activeStep, setActiveStep] = useState(0);
+  const [formValues, setFormValues] = useState({})
+
+  const [activeStep, setActiveStep] = useState(0)
   useEffect(() => {
-    const token = Cookie.get('token');
+    const token = Cookie.get('token')
     async function fetchData() {
       // You can await here
-      const getInitialState = await getLastDonate(token);
+      const getInitialState = await getLastDonate(token)
       if (getInitialState) {
         setFormValues({
           ...getInitialState
-        });
+        })
       }
     }
-    fetchData();
-    console.log(formValues);
-    return () => {};
-  }, []);
+    fetchData()
+    console.log(formValues)
+    return () => { }
+  }, [])
   const handleNext = (newValues) => {
-    setFormValues({ ...formValues, ...newValues });
-    setActiveStep(activeStep + 1);
+    setFormValues({ ...formValues, ...newValues })
+    setActiveStep(activeStep + 1)
     // handleSubmit(onSubmit)(e);
     // setFormValues({ ...formValues, ...newValues });
-  };
+  }
 
   const handleBack = (newValues) => {
-    setFormValues({ ...formValues, ...newValues });
-    setActiveStep(activeStep - 1);
+    setFormValues({ ...formValues, ...newValues })
+    setActiveStep(activeStep - 1)
     // handleSubmit((e) => console.log(e));
     // console.log(activeStep, e);
-  };
+  }
   function getStepContent(step) {
-    const isLastStep = activeStep === steps.length - 1;
+    const isLastStep = activeStep === steps.length - 1
     switch (step) {
       case 0:
         return (
@@ -100,7 +102,7 @@ export default function Checkout() {
             handleBack={handleBack}
             handleNext={handleNext}
           />
-        );
+        )
       case 1:
         return (
           <PaymentForm
@@ -110,7 +112,7 @@ export default function Checkout() {
             handleBack={handleBack}
             handleNext={handleNext}
           />
-        );
+        )
       case 2:
         return (
           <Review
@@ -120,9 +122,9 @@ export default function Checkout() {
             handleBack={handleBack}
             handleNext={handleNext}
           />
-        );
+        )
       default:
-        throw new Error('Unknown step');
+        throw new Error('Unknown step')
     }
   }
   // console.log('Checkoutformvalues', formValues);
@@ -134,7 +136,7 @@ export default function Checkout() {
           <Typography component="h1" variant="h4" align="center">
             Checkout
           </Typography>
-          <Stepper activeStep={activeStep} className={classes.stepper}>
+          <Stepper activeStep={activeStep} className={classes.stepper} orientation={matches ? "vertical" : "horizontal"}>
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
@@ -154,11 +156,11 @@ export default function Checkout() {
                 </Typography>
               </React.Fragment>
             ) : (
-              <React.Fragment>{getStepContent(activeStep)}</React.Fragment>
-            )}
+                <React.Fragment>{getStepContent(activeStep)}</React.Fragment>
+              )}
           </React.Fragment>
         </Paper>
       </main>
     </React.Fragment>
-  );
+  )
 }

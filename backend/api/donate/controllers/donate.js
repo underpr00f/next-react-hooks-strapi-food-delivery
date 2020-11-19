@@ -2,6 +2,7 @@
 const { sanitizeEntity } = require("strapi-utils")
 const { hashChecker } = require("../../../utils/hashChecker")
 const { filterObjWithBlacklist } = require("../../../utils/filterObjWithBlacklist")
+const { donateUpdateToConfirm } = require("../../../utils/donateUpdateToConfirm")
 
 /**
  * Read the documentation (https://strapi.io/documentation/v3.x/concepts/controllers.html#core-controllers)
@@ -134,39 +135,35 @@ module.exports = {
   },
   updateToConfirm: async (ctx) => {
     const { message } = ctx.request.body
+    const paymentObject = ctx.request.body
     const notification_secret = process.env.YANDEX_MONEY_SECRET || ""
-    const payment_confirmed = hashChecker(ctx.request.body, notification_secret)
-    if (payment_confirmed) {
-      console.log("payment confirm")
+    let donate
+    const payment_confirmed = hashChecker(paymentObject, notification_secret)
+    if (!payment_confirmed) { return ctx.throw(401, "Wrong payment token") }
+
+    console.log("payment confirm", paymentObject)
+
+    if (paymentObject.operation_id === "test-notification") {
+      //CHECK IF TEST CONFIRM LAST DONATE 
+      const currentOrder = await strapi.query('donate').count()
+      console.log(currentOrder)
+      donate = await strapi
+        .query("donate")
+        .update({ order_id: currentOrder }, { confirmed: true })
     } else {
-      return ctx.throw(401, "Wrong payment token")
+      //CHECK IF PAYMENT TRANSACTION FIND BY operation_id
+      console.log("PLEASE CHECK YOUR QUERY BY OPERATION_ID")
+      donate = await strapi
+        .query("donate")
+        .update({ order_id: paymentObject.label }, { confirmed: true })
     }
+
     // console.log("HI", ctx.request.body, hashChecker(ctx.request.body, notification_secret))
     // try {
     // const { id, isAdmin = false } = await strapi.plugins[
     //   "users-permissions"
     // ].services.jwt.getToken(ctx);
-
-    // const results = await strapi
-    //   .query("donate")
-    //   .findOne({ user: id, confirmed: false });
-    // let donate;
-    // if (!results) {
-    //   console.log("CREATE");
-    //   donate = await strapi.services.donate.create({ message, user: id });
-    // } else {
-    //   console.log("UPDATE", results);
-    //   donate = await strapi
-    //     .query("donate")
-    //     .update({ id: results.id }, ctx.request.body);
-    // }
-    // return sanitizeEntity(donate, { model: strapi.models.donate });
-    //   return ctx.message("Hello");
-    // } catch (err) {
-    // It will be there!
-
-    //   return ctx.throw(401, "Unauthorized");
-    // }
+    sanitizeEntity(donate, { model: strapi.models.donate })
     return (ctx.body = {
       status: "success",
     })

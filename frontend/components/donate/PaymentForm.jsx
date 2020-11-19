@@ -23,7 +23,7 @@ export default function PaymentForm({
   console.log('Paymentmessage', message)
   const { register, control, handleSubmit, setValue, errors } = useForm()
   const [anothermessageNew, setAnothermessageNew] = useState('')
-  const [amountNew, setAmountNew] = useState('0')
+  const [amountNew, setAmountNew] = useState('2')
   useEffect(() => {
     if (anothermessage) {
       setAnothermessageNew(anothermessage)
@@ -49,7 +49,7 @@ export default function PaymentForm({
               register={register}
               errors={errors}
               dataField={anothermessageNew}
-              shortName="Your Another message"
+              shortName="Another message"
               nameType="anothermessage"
               focusField={true}
               validationTypeObj={{
@@ -66,7 +66,6 @@ export default function PaymentForm({
               dataField={amountNew}
               shortName="Your Donate"
               nameType="amount"
-              focusField={true}
               validationTypeObj={{
                 required: true,
                 maxLength: 6,

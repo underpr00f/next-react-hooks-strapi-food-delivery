@@ -26,9 +26,9 @@ async function handler(req, res) {
     const checkTransfer = hashChecker(req.body, notification_secret)
     if (checkTransfer) {
       const response = await provideDonate(req.body)
-      return res.json({ status: 200, message: 'POST REQUEST SUCCESS!', response })
+      return res.status(200).json({ status: 200, message: 'POST REQUEST SUCCESS!', response })
     }
-    return res.json({ status: 401, message: 'POST REQUEST FAIL!', ...req.body })
+    return res.status(401).json({ status: 401, message: 'POST REQUEST FAIL!', ...req.body })
   }
   // Rest of the API logic
   return res.status(405).json({ status: 405, error: 'Method not allowed!' })

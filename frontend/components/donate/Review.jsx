@@ -46,6 +46,7 @@ export default function Review({
   message,
   anothermessage,
   amount,
+  order_id,
   activeStep,
   isLastStep,
   handleBack,
@@ -61,6 +62,12 @@ export default function Review({
       </Typography>
       <List disablePadding>
         <ListItem className={classes.listItem}>
+          <ListItemText secondary="Donate ID" />
+          <Typography variant="subtitle1" className={classes.total}>
+            {order_id}
+          </Typography>
+        </ListItem>
+        <ListItem className={classes.listItem}>
           <ListItemText secondary="Message" />
           <Typography variant="subtitle1" className={classes.total}>
             {message}
@@ -73,7 +80,7 @@ export default function Review({
           </Typography>
         </ListItem>
         <ListItem className={classes.listItem}>
-          <ListItemText secondary="Donate" />
+          <ListItemText secondary="Donate Sum" />
           <Typography variant="subtitle1" className={classes.total}>
             {amount}
           </Typography>
@@ -96,9 +103,9 @@ export default function Review({
           name="short-dest"
           value={anothermessage || ''}
         />
-        <input type="hidden" name="label" value="$order_id" />
+        <input type="hidden" name="label" value={order_id || ""} />
         <input type="hidden" name="quickpay-form" value="donate" />
-        <input type="hidden" name="targets" value="transaction {order_id}" />
+        <input type="hidden" name="targets" value={`Перевод за заказ №${order_id}`} />
         <input type="hidden" name="sum" value={amount || '0'} data-type="number" />
         <input type="hidden" name="comment" value="Requires remote control." />
         {/* <input type="hidden" name="need-fio" value="true" />

@@ -29,7 +29,8 @@
       "type": "biginteger"
     },
     "order_id": {
-      "type": "biginteger"
+      "type": "biginteger",
+      "unique": true
     }
   }
 }
