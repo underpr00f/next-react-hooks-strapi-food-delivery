@@ -26,10 +26,10 @@
       "type": "string"
     },
     "amount": {
-      "type": "biginteger"
+      "type": "integer"
     },
     "order_id": {
-      "type": "biginteger",
+      "type": "integer",
       "unique": true
     }
   }

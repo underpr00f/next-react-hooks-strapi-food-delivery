@@ -1,16 +1,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
-import Link from "next/link";
-import { linksArray } from "../../constants/constants";
-import { MaterialHeader } from "../../MUI/Organisms/MaterialHeader";
-import { logout } from "../../lib/auth";
-import CartToggle from "./../cart/CartToggle";
-import { NavLink } from "../../MUI/Molecules/ButtonLink";
-import { CustomizedMenus } from "../../MUI/Organisms/CustomizedMenus";
+import React from "react"
+import Link from "next/link"
+import { linksArray } from "../../constants/constants"
+import { MaterialHeader } from "../../MUI/Organisms/MaterialHeader"
+import { logout } from "../../lib/auth"
+import CartToggle from "./../cart/CartToggle"
+import { NavLink } from "../../MUI/Molecules/ButtonLink"
+import { CustomizedMenus } from "../../MUI/Organisms/CustomizedMenus"
 
-import IconButton from "@material-ui/core/IconButton";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import { ThemeIndicator } from "./ThemeIndicator";
+import IconButton from "@material-ui/core/IconButton"
+import ExitToAppIcon from "@material-ui/icons/ExitToApp"
+import { ThemeIndicator } from "./ThemeIndicator"
 
 export const CustomHeader = ({ user, setUserFunc, handleLogouted }) => {
   return (
@@ -31,15 +31,15 @@ export const CustomHeader = ({ user, setUserFunc, handleLogouted }) => {
           {user ? (
             <>
               <CartToggle user={user.username} />
-              <NavLink name={user.username} hrefValue="/my-orders" />
+              <NavLink name={user.username} hrefValue="/my-donates" />
               <div className="nav-logoutButton">
                 <Link href="/">
                   <a
                     className="nav-link"
                     onClick={() => {
-                      logout();
-                      setUserFunc(null);
-                      handleLogouted();
+                      logout()
+                      setUserFunc(null)
+                      handleLogouted()
                     }}
                   >
                     Logout
@@ -52,9 +52,9 @@ export const CustomHeader = ({ user, setUserFunc, handleLogouted }) => {
                   aria-controls="customized-menu"
                   aria-haspopup="true"
                   onClick={() => {
-                    logout();
-                    setUserFunc(null);
-                    handleLogouted();
+                    logout()
+                    setUserFunc(null)
+                    handleLogouted()
                   }}
                 >
                   <ExitToAppIcon />
@@ -62,14 +62,14 @@ export const CustomHeader = ({ user, setUserFunc, handleLogouted }) => {
               </div>
             </>
           ) : (
-            <>
-              <CartToggle user={null} />
-              <NavLink name="Sign up" hrefValue="/signup" />
-              <NavLink name="Sign in" hrefValue="/login" />
-            </>
-          )}
+              <>
+                <CartToggle user={null} />
+                <NavLink name="Sign up" hrefValue="/signup" />
+                <NavLink name="Sign in" hrefValue="/login" />
+              </>
+            )}
         </div>
       </MaterialHeader>
     </>
-  );
-};
+  )
+}

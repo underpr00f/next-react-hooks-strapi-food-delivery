@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid"
 export default function MyOrders() {
   return (
     <>
-      <h1>My Orders Page</h1>
+      <h1>My Donates Page</h1>
       <Grid container>
         <Grid item xs={12}>
           <div>

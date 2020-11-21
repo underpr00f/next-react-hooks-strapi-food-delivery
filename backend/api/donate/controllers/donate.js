@@ -10,6 +10,30 @@ const { donateUpdateToConfirm } = require("../../../utils/donateUpdateToConfirm"
  */
 
 module.exports = {
+  find: async (ctx) => {
+    try {
+      const { id, isAdmin = false } = await strapi.plugins[
+        "users-permissions"
+      ].services.jwt.getToken(ctx)
+      const obj = await strapi
+        .query("donate")
+        .find({ user: id, confirmed: true })
+
+      if (!obj) {
+        return {}
+      }
+      // REMOVE USER FROM RESPONSE
+      const blacklist = ["user"]
+      // Remove user field from obj
+      const filteredObj = obj.map(item => filterObjWithBlacklist(blacklist, item))
+
+      return filteredObj
+    } catch (err) {
+      // It will be there!
+
+      return ctx.throw(401, "Unauthorized")
+    }
+  },
   // create: async (ctx) => {
   //   const { message, user } = ctx.request.body;
 

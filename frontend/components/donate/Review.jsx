@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -64,7 +65,7 @@ export default function Review({
         <ListItem className={classes.listItem}>
           <ListItemText secondary="Donate ID" />
           <Typography variant="subtitle1" className={classes.total}>
-            {order_id}
+            №{order_id}
           </Typography>
         </ListItem>
         <ListItem className={classes.listItem}>
@@ -82,7 +83,7 @@ export default function Review({
         <ListItem className={classes.listItem}>
           <ListItemText secondary="Donate Sum" />
           <Typography variant="subtitle1" className={classes.total}>
-            {amount}
+            {amount} руб.
           </Typography>
         </ListItem>
       </List>
@@ -120,7 +121,14 @@ export default function Review({
           <input type="radio" name="paymentType" value="AC" />
           With bank card
         </label>{' '}
-        <input type="submit" value="Transfer" />
+
+        <DonateBtn
+          activeStep={activeStep}
+          isLastStep={isLastStep}
+          handleBack={handleBack}
+          handleNext={handleNext}
+          handleSubmit={handleSubmit}
+        />
       </form>
       {/* {products.map((product) => (
           <ListItem className={classes.listItem} key={product.name}>
@@ -161,13 +169,13 @@ export default function Review({
           </Grid>
         </Grid>
       </Grid> */}
-      <DonateBtn
+      {/* <DonateBtn
         activeStep={activeStep}
         isLastStep={isLastStep}
         handleBack={handleBack}
         handleNext={handleNext}
         handleSubmit={handleSubmit}
-      />
+      /> */}
     </React.Fragment>
   )
 }
