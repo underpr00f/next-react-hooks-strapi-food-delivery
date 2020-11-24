@@ -28,8 +28,8 @@ export const CustomFooter = () => {
           <div className="footer-contact">
             <ul>
               <li>Свяжитесь с нами:</li>
-              <li>info@boutique.com</li>
-              <li>109241, г. Москва, Котельническая наб., д. 117</li>
+              <li>info@underproof.com</li>
+              <li>134567, г. Москва, ул. Ленина , д. 217</li>
               <li>8 800 123 33 24</li>
             </ul>
           </div>
